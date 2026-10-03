@@ -26,7 +26,18 @@ The original all-model runner reported a nonzero exit because it retained the ea
 
 ## Automated and package checks
 
-Direct GitHub packaging was added with the README update. Two cache tests exercise concurrent installation, cache reuse, source updates, private-file exclusion, and failed-runtime cleanup using a dependency-free fixture. `npm run test:install` separately passed real production dependency installation and modern/legacy MCP calls from a source-only copy with no `dist` or `node_modules`. A package dry run confirms the launcher, source, adapter, and `npm-shrinkwrap.json` are included. Native GitHub fetch/install results are recorded after the corresponding commit is available remotely.
+Direct GitHub packaging was added with the README update. Two cache tests exercise concurrent installation, cache reuse, source updates, private-file exclusion, and failed-runtime cleanup using a dependency-free fixture. `npm run test:install` separately passed real production dependency installation and modern/legacy MCP calls from a source-only copy with no `dist` or `node_modules`. A package dry run confirms the launcher, source, adapter, and `npm-shrinkwrap.json` are included.
+
+The README's GitHub installation commands were exercised with isolated client profiles on Windows. Codex and Claude installed commit `0af94f8`; OpenCode and npm installed the subsequent packaging fix at `629e20f`.
+
+| GitHub installation path | Observed result |
+| --- | --- |
+| Codex CLI 0.160.0 marketplace add and plugin add | Installed; both modern and legacy MCP subprocess checks passed against the installed launcher |
+| Claude Code 2.1.288 marketplace add and plugin install | Installed; both modern and legacy MCP subprocess checks passed against the installed launcher |
+| OpenCode 2.0.18 plugin add | Installed Git package; adapter active, shared skill discovered, and MCP connected with all eight tools |
+| Standalone `npx --package=git+https://github.com/ossianravn/image-generation-plugin.git` | Installed, prepared the runtime cache, and displayed CLI help successfully |
+
+The first Git package attempts failed during npm's dependency preparation: a script named `build` triggered an unnecessary nested development install, which npm 11.17.0 rejected with `EALLOWSCRIPTS`. Renaming the contributor command to `build:runtime` removed that preparation path; the direct GitHub commands then passed. An isolated OpenCode service initially collided with the existing service port; assigning the test profile its own port resolved the harness conflict. No provider requests or real credential changes were made by these installation checks.
 
 OpenCode 2.0.18 loaded the native adapter from a local package directory, reported it active, discovered the shared skill, and connected its MCP service. Its local directory loader required a root `index.js` entry; pointing directly at the `.mjs` adapter did not load it. Both the native Claude manifest and repository marketplace passed strict validation.
 
@@ -55,7 +66,7 @@ The initial Claude strict check reported missing author attribution; adding the 
 - Codex desktop plugin installation, skill activation, inline image display, and file navigation have not been exercised end to end in a fresh user session.
 - Claude package validation is separate from an interactive Claude session rendering an image and using the skill.
 - OpenCode v2 MCP connection and skill discovery passed. Interactive tool use and image rendering in the user interface remain to be exercised.
-- Local runtime tests and generated dependency packages were run on Windows x64. The Windows/macOS/Linux CI matrix is configured; results for 0.2.0 have not been established on GitHub. Packages must be built for their target OS and architecture.
+- The Windows/macOS/Linux [CI matrix passed for 0.2.0, including the Git packaging fix](https://github.com/ossianravn/image-generation-plugin/actions/runs/37150814856), covering dependency installation, type checking, 19 automated tests, and validation. Direct GitHub client installation and generated dependency packages were exercised on Windows x64. Prebuilt packages must be built for their target OS and architecture.
 - Masks, transparency, all optional controls, maximum references, and multi-output batches are not comprehensively live-tested. Core workflow evidence must not be read as exhaustive parameter coverage.
 - Shared OS credential setup has native Windows evidence. macOS/Linux credential access, host sandbox permissions, and a fresh installed-user onboarding journey in each host still need acceptance testing.
 - Public release, npm publication, and license assignment remain pending.

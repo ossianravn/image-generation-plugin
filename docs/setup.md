@@ -1,5 +1,7 @@
 # Install and use the image generation plugin
 
+Start with the [README installation instructions](../README.md#install) to install directly from GitHub in Codex, Claude Code, or OpenCode. This guide covers advanced configuration, local development, and manual connections.
+
 The runtime requires Node.js 24 or newer. Generation uses your provider's API credits. Image generation, reference-guided composition, and editing share the same local artifact and job system.
 
 ## Table of contents
@@ -17,7 +19,7 @@ Run `npm ci`, then `npm run build:runtime`. The executable is `node dist/cli.js`
 
 ## Configure providers once
 
-Run this in your own interactive terminal from the checkout or installed package directory:
+For a GitHub installation, ask your agent for the setup command or use the [standalone command in the README](../README.md#connect-your-providers). From a built checkout or prebuilt bundle, run this in your own interactive terminal:
 
 ```sh
 node dist/cli.js setup

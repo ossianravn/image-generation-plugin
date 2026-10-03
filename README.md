@@ -154,7 +154,7 @@ For credential rotation/removal, direct MCP configuration, updates, and uninstal
 
 **v0.2.0 is an early release**, developed against Codex CLI 0.160.0, Claude Code 2.1.288, OpenCode 2.0.18, and Node 24.19.0.
 
-The runtime has Windows validation, real MCP subprocess checks, a Windows credential-store check, and recorded live provider workflows. Native macOS Keychain/Linux Secret Service access and image rendering in fresh interactive client sessions still need acceptance testing. See the [validation report](docs/validation.md) for the exact boundaries of the evidence.
+Direct GitHub installation has been checked in all three clients on Windows. Automated checks passed in Windows, macOS, and Linux CI. The runtime also has real MCP subprocess checks, a Windows credential-store check, and recorded live provider workflows. Native macOS Keychain/Linux Secret Service access and image rendering in fresh interactive client sessions still need acceptance testing. See the [validation report](docs/validation.md) for the exact boundaries of the evidence.
 
 The repository is private, the package is not published to npm, and a license has not yet been assigned.
 
