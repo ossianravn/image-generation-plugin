@@ -1,9 +1,13 @@
 ---
 name: image-generation
-description: Generate raster assets, create images from visual references, or edit existing images using the image-generation plugin and the user's provider keys.
+description: Generate raster assets, create images from visual references, edit existing images, or configure provider keys for the image-generation plugin.
 ---
 
+# Image generation
+
 Use the plugin's MCP tools to create a durable asset in the user's project and support follow-up edits.
+
+When the user wants to configure providers, or a chosen provider has no key, call `credential_status`. Present its `setup.terminal_command` for the user to run in their own terminal and enter keys through the masked prompts. Wait for the user to finish, then call `credential_status` again and report presence and the active source. Environment/file overrides can take precedence over a saved key. Keep credential values out of chat, tool arguments, and shell command arguments; the agent only needs status. If the OS store reports an issue, explain its next action. Setup alone does not verify provider access. See [setup documentation](../../docs/setup.md) for rotation, removal, and headless configuration.
 
 1. Establish the intended asset, destination, and any required subject, style, dimensions, or transparency. Inspect supplied references with `inspect_image` before directing an edit.
 2. Use `list_models` and `get_model` to select a configured provider and a model that supports the requested controls. Follow explicit provider/model choices. Catalogue metadata distinguishes documented support from live validation; credentials being present does not establish account access.

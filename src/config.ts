@@ -1,45 +1,88 @@
 import { readFile } from 'node:fs/promises';
-import { homedir } from 'node:os';
-import { resolve, join } from 'node:path';
+import { join } from 'node:path';
+import { dataDirectory as resolveDataDirectory } from '../bootstrap/paths.mjs';
 import { parseEnv } from 'node:util';
 import type { Provider } from './contracts.ts';
+import { credentialStoreError, keyNames, providers, systemCredentialStore, type CredentialStore } from './credentials.ts';
 import { hasCode, ImageError } from './errors.ts';
 
-export const keyNames: Record<Provider, string> = {
-  openai: 'OPENAI_API_KEY', gemini: 'GEMINI_API_KEY',
-  replicate: 'REPLICATE_API_KEY', openrouter: 'OPENROUTER_API_KEY',
-};
+export interface CredentialStatus {
+  provider: Provider;
+  configured: boolean;
+  source: 'environment' | 'env_file' | 'os_store' | 'legacy_file' | null;
+  issue?: string;
+}
 
 export interface Config {
   dataDirectory: string;
-  key: (provider: Provider) => string;
-  configured: (provider: Provider) => boolean;
+  key(provider: Provider): string;
+  configured(provider: Provider): boolean;
+  credentials(): CredentialStatus[];
+  refresh(): Promise<void>;
 }
 
-export async function loadConfig(options: { envFile?: string; dataDirectory?: string } = {}): Promise<Config> {
-  const platformData = process.platform === 'win32'
-    ? process.env.LOCALAPPDATA ?? join(homedir(), 'AppData', 'Local')
-    : process.platform === 'darwin' ? join(homedir(), 'Library', 'Application Support')
-      : process.env.XDG_DATA_HOME ?? join(homedir(), '.local', 'share');
-  const dataDirectory = resolve(options.dataDirectory ?? process.env.IMAGE_GENERATION_DATA
-    ?? process.env.PLUGIN_DATA ?? process.env.CLAUDE_PLUGIN_DATA ?? join(platformData, 'image-generation'));
-  const envFile = options.envFile ?? join(dataDirectory, 'credentials.env');
-  let fileValues: Record<string, string | undefined> = {};
-  try {
-    fileValues = parseEnv(await readFile(envFile, 'utf8'));
-  } catch (error) {
-    if (options.envFile || !hasCode(error, 'ENOENT')) {
-      throw new ImageError('CREDENTIAL_FILE', 'Cannot read the selected credential file. Check its path and permissions.');
-    }
+interface ConfigOptions {
+  envFile?: string;
+  dataDirectory?: string;
+  environment?: NodeJS.ProcessEnv;
+  credentialStore?: CredentialStore;
+}
+
+async function readCredentials(path: string, required: boolean): Promise<Record<string, string | undefined>> {
+  try { return parseEnv(await readFile(path, 'utf8')); }
+  catch (error) {
+    if (!required && hasCode(error, 'ENOENT')) return {};
+    throw new ImageError('CREDENTIAL_FILE', 'Cannot read the selected credential file. Check its path and permissions.');
   }
-  const values = { ...fileValues, ...process.env };
-  return {
+}
+
+export async function loadConfig(options: ConfigOptions = {}): Promise<Config> {
+  const environment = options.environment ?? process.env;
+  const dataDirectory = resolveDataDirectory(options.dataDirectory, environment);
+  const store = options.credentialStore ?? systemCredentialStore();
+  let snapshot: { status: CredentialStatus; value?: string }[] = [];
+  let refreshing: Promise<void> | undefined;
+
+  async function readSnapshot() {
+    const explicit = options.envFile ? await readCredentials(options.envFile, true) : {};
+    let legacy: Promise<Record<string, string | undefined>> | undefined;
+    const next = await Promise.all(providers.map(async provider => {
+      const name = keyNames[provider];
+      let value = environment[name]?.trim();
+      let source: CredentialStatus['source'] = value ? 'environment' : null;
+      let issue: string | undefined;
+      if (!value && explicit[name]?.trim()) { value = explicit[name]!.trim(); source = 'env_file'; }
+      if (!value) {
+        try { value = (await store.get(provider))?.trim(); }
+        catch { issue = credentialStoreError().message; }
+        if (value) source = 'os_store';
+      }
+      if (!value && !options.envFile) {
+        legacy ??= readCredentials(join(dataDirectory, 'credentials.env'), false);
+        value = (await legacy)[name]?.trim();
+        if (value) source = 'legacy_file';
+      }
+      return { value, status: { provider, configured: Boolean(value), source, ...(issue ? { issue } : {}) } };
+    }));
+    snapshot = next;
+  }
+
+  const config: Config = {
     dataDirectory,
-    configured: provider => Boolean(values[keyNames[provider]]?.trim()),
+    configured: provider => snapshot.some(item => item.status.provider === provider && item.status.configured),
+    credentials: () => snapshot.map(item => ({ ...item.status })),
+    refresh() {
+      refreshing ??= readSnapshot().finally(() => { refreshing = undefined; });
+      return refreshing;
+    },
     key(provider) {
-      const value = values[keyNames[provider]]?.trim();
-      if (!value) throw new ImageError('MISSING_KEY', `Set ${keyNames[provider]} in the environment or credential file.`);
-      return value;
+      const item = snapshot.find(item => item.status.provider === provider);
+      if (item?.value) return item.value;
+      if (item?.status.issue) throw credentialStoreError();
+      throw new ImageError('MISSING_KEY',
+        `Configure ${keyNames[provider]} with the setup command in your terminal. Use credential_status for the command, or supply an environment variable or --env-file.`);
     },
   };
+  await config.refresh();
+  return config;
 }

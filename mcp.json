@@ -4,7 +4,7 @@
     "image-generation": {
       "type": "stdio",
       "command": "node",
-      "args": ["${PLUGIN_ROOT}/dist/cli.js", "serve"],
+      "args": ["${PLUGIN_ROOT}/bin/image-generation.mjs", "serve"],
       "env": { "IMAGE_GENERATION_DATA": "${PLUGIN_DATA}" }
     }
   }

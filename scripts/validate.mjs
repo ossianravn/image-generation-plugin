@@ -19,13 +19,16 @@ async function checkCode(directory) {
   for (const entry of await readdir(directory, { withFileTypes: true })) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) await checkCode(path);
-    else if (/\.(?:ts|mjs)$/.test(path)) {
+    else if (/\.(?:ts|m?js)$/.test(path)) {
       const lines = (await readFile(path, 'utf8')).trimEnd().split(/\r?\n/).length;
       if (lines > 300) problems.push(`${path}: ${lines} physical lines exceeds the 300-line rule.`);
     }
   }
 }
-for (const directory of ['src', 'tests', 'scripts']) await checkCode(directory);
+for (const directory of ['src', 'tests', 'scripts', 'bin', 'bootstrap', 'opencode']) await checkCode(directory);
+const claudeManifest = JSON.parse(await readFile('.claude-plugin/plugin.json', 'utf8'));
+if (claudeManifest.version !== pkg.version) problems.push('Claude and package versions disagree.');
+if ((await readFile('index.js', 'utf8')).split(/\r?\n/).length > 300) problems.push('index.js exceeds 300 lines.');
 
 const skill = await readFile('skills/image-generation/SKILL.md', 'utf8');
 if (!/^---\r?\nname: image-generation\r?\ndescription: .+\r?\n---/.test(skill)) {

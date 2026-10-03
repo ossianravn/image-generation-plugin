@@ -6,6 +6,8 @@ import { Runtime } from '../src/runtime.ts';
 import { JobStore } from '../src/store.ts';
 import { Http, type Fetch } from '../src/http.ts';
 import type { ProviderAdapter } from '../src/contracts.ts';
+import type { Config } from '../src/config.ts';
+import { providers } from '../src/credentials.ts';
 
 export async function fixture() {
   const directory = await mkdtemp(join(tmpdir(), 'image-plugin-test-'));
@@ -21,8 +23,11 @@ export function request(output_directory: string, request_id = 'test-action') {
     prompt: 'A red ceramic cup on a white table', output_directory };
 }
 
-export function config(dataDirectory: string) {
-  return { dataDirectory, key: () => 'unit-test-key', configured: () => true };
+export function config(dataDirectory: string): Config {
+  return { dataDirectory, key: () => 'unit-test-key', configured: () => true,
+    refresh: async () => {},
+    credentials: () => providers.map(provider => ({ provider, configured: true, source: 'environment' })),
+  };
 }
 
 export async function runtimeFor(directory: string, adapter: ProviderAdapter, fetcher?: Fetch) {

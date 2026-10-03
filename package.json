@@ -1,11 +1,17 @@
 {
   "name": "@ossianravn/image-generation-plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Local image generation and editing for agent hosts",
   "type": "module",
-  "engines": { "node": ">=24.0.0" },
-  "bin": { "image-generation": "dist/cli.js" },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "bin": {
+    "image-generation": "bin/image-generation.mjs"
+  },
+  "main": "./index.js",
+  "exports": { ".": "./index.js" },
   "scripts": {
     "build": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
@@ -13,12 +19,32 @@
     "dev": "node --env-file-if-exists=.env.local src/cli.ts",
     "validate": "node scripts/validate.mjs",
     "package": "npm run build && node scripts/package.mjs",
-    "test:live": "node --env-file=.env.local scripts/live-check.ts"
+    "test:live": "node --env-file=.env.local scripts/live-check.ts",
+    "test:credentials:os": "node scripts/check-credential-store.ts",
+    "test:install": "node scripts/check-github-source.mjs"
   },
-  "files": ["dist", "skills", "plugin.json", "mcp.json", "README.md", "docs", ".env.example"],
-  "allowScripts": { "esbuild": true },
+  "files": [
+    "index.js",
+    "bin",
+    "bootstrap",
+    "opencode",
+    "src",
+    "npm-shrinkwrap.json",
+    "dist",
+    "skills",
+    "plugin.json",
+    "mcp.json",
+    "README.md",
+    "docs",
+    ".env.example"
+  ],
+  "allowScripts": {
+    "esbuild": true
+  },
   "dependencies": {
+    "@inquirer/prompts": "8.7.2",
     "@modelcontextprotocol/server": "2.3.0",
+    "@napi-rs/keyring": "2.1.0",
     "sharp": "0.35.5",
     "zod": "4.6.5"
   },

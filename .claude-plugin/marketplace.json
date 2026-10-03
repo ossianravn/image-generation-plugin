@@ -1,0 +1,6 @@
+{
+  "name": "image-generation",
+  "description": "Generate and edit project images with your own provider keys.",
+  "owner": { "name": "ossianravn" },
+  "plugins": [{ "name": "image-generation", "source": "./", "description": "Generate and edit project images with your own provider keys." }]
+}

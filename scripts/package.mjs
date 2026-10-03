@@ -8,7 +8,7 @@ const stamp = new Date().toISOString().replace(/[:.]/g, '-');
 const output = join(root, 'releases', `${pkg.version}-${process.platform}-${process.arch}-${stamp}`);
 const portable = join(output, 'portable');
 await mkdir(portable, { recursive: true });
-for (const name of ['dist', 'skills', 'plugin.json', 'mcp.json', 'README.md', '.env.example', 'package.json', 'package-lock.json', 'docs']) {
+for (const name of ['index.js', 'dist', 'bin', 'bootstrap', 'opencode', 'src', 'skills', 'plugin.json', 'mcp.json', 'README.md', '.env.example', 'package.json', 'npm-shrinkwrap.json', 'docs']) {
   await cp(join(root, name), join(portable, name), { recursive: true });
 }
 if (!process.env.npm_execpath) throw new Error('Run packaging through npm run package.');
@@ -21,7 +21,7 @@ execFileSync(process.execPath, [process.env.npm_execpath, 'ci', '--omit=dev', '-
 
 const claude = join(output, 'claude');
 await mkdir(join(claude, '.claude-plugin'), { recursive: true });
-for (const name of ['dist', 'skills', 'node_modules', 'README.md', '.env.example', 'package.json', 'package-lock.json', 'docs']) {
+for (const name of ['index.js', 'dist', 'bin', 'bootstrap', 'opencode', 'src', 'skills', 'node_modules', 'README.md', '.env.example', 'package.json', 'npm-shrinkwrap.json', 'docs']) {
   await cp(join(portable, name), join(claude, name), { recursive: true });
 }
 const manifest = JSON.parse(await readFile('plugin.json', 'utf8'));

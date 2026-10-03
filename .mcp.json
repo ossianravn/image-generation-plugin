@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "image-generation": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/bin/image-generation.mjs", "serve"],
+      "env": { "IMAGE_GENERATION_DATA": "${CLAUDE_PLUGIN_DATA}" }
+    }
+  }
+}

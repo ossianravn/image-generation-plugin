@@ -1,19 +1,22 @@
 import { parseArgs } from 'node:util';
 import { readFile } from 'node:fs/promises';
 import { serveStdio } from '@modelcontextprotocol/server/stdio';
-import { loadConfig, keyNames } from './config.ts';
+import { loadConfig } from './config.ts';
+import { providerNames } from './credentials.ts';
 import { publicError, ImageError } from './errors.ts';
 import { hostConfig } from './host-config.ts';
 import { createServer } from './mcp.ts';
 import { Runtime } from './runtime.ts';
 import { providerSchema } from './schema.ts';
+import { credentialStatus, setup } from './setup.ts';
 import { JobStore } from './store.ts';
-import type { Job, Provider } from './contracts.ts';
+import type { Job } from './contracts.ts';
 
 const help = `image-generation <command> [options]
 
 Commands:
   serve        Start the stdio MCP server
+  setup        Choose providers and save masked keys in the shared OS store
   doctor       Report credential presence and local data location
   models       List catalogue models
   model        Inspect a model (--provider NAME --model ID)
@@ -26,6 +29,8 @@ Commands:
 Options:
   --env-file FILE   Explicit credential file; environment values take precedence
   --data-dir DIR    Job state directory
+  --provider NAME   Configure just this provider with setup
+  --remove          With setup --provider NAME, remove its shared saved key
   --help           Show this help
 
 Requests use absolute output/reference paths. Returned artifact IDs can be reused.
@@ -59,7 +64,7 @@ async function main(): Promise<void> {
   const { values, positionals } = parseArgs({ allowPositionals: true, options: {
     'env-file': { type: 'string' }, 'data-dir': { type: 'string' },
     request: { type: 'string' }, provider: { type: 'string' }, model: { type: 'string' },
-    id: { type: 'string' }, host: { type: 'string' }, help: { type: 'boolean' },
+    id: { type: 'string' }, host: { type: 'string' }, help: { type: 'boolean' }, remove: { type: 'boolean' },
   } });
   const command = positionals[0];
   if (!command || values.help) { process.stdout.write(help); return; }
@@ -67,11 +72,23 @@ async function main(): Promise<void> {
     print(hostConfig(values.host ?? '', process.argv[1]!, values['env-file']));
     return;
   }
+  if (command === 'setup') {
+    await setup(values.provider ? providerSchema.parse(values.provider) : undefined, values.remove);
+    const config = await loadConfig({ envFile: values['env-file'], dataDirectory: values['data-dir'] });
+    const sourceNames = { environment: 'environment variables', env_file: 'the explicit credential file',
+      legacy_file: 'the legacy credential file' };
+    for (const item of config.credentials()) {
+      if (item.source === 'environment' || item.source === 'env_file' || item.source === 'legacy_file') {
+        process.stdout.write(`${providerNames[item.provider]}: active key comes from ${sourceNames[item.source]}.\n`);
+      }
+    }
+    process.stdout.write('Setup complete. Use credential_status in your agent to refresh. No provider requests were made.\n');
+    return;
+  }
   const config = await loadConfig({ envFile: values['env-file'], dataDirectory: values['data-dir'] });
   if (command === 'doctor') {
     print({ node: process.version, data_directory: config.dataDirectory,
-      credentials: Object.fromEntries(Object.keys(keyNames).map(key => [key, config.configured(key as Provider)])),
-      authentication_verified: false });
+      ...await credentialStatus(config) });
     return;
   }
   const runtime = new Runtime(config, await JobStore.open(config.dataDirectory));
@@ -95,7 +112,7 @@ async function main(): Promise<void> {
     return;
   }
   try {
-    if (command === 'models') print(runtime.listModels(values.provider ? providerSchema.parse(values.provider) : undefined));
+    if (command === 'models') print(await runtime.listModels(values.provider ? providerSchema.parse(values.provider) : undefined));
     else if (command === 'model') print(await runtime.getModel(providerSchema.parse(values.provider), values.model ?? ''));
     else if (command === 'generate' || command === 'edit') {
       print(await completed(runtime, await runtime.start(await readRequest(values.request), command)));

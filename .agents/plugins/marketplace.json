@@ -1,0 +1,10 @@
+{
+  "name": "image-generation",
+  "interface": { "displayName": "Image Generation" },
+  "plugins": [{
+    "name": "image-generation",
+    "source": { "source": "local", "path": "./" },
+    "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+    "category": "Productivity"
+  }]
+}

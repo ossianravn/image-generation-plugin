@@ -6,6 +6,7 @@ import { preview, readImage } from './images.ts';
 import { artifactPath } from './prepare.ts';
 import type { Runtime } from './runtime.ts';
 import { providerSchema, requestSchema } from './schema.ts';
+import { credentialStatus } from './setup.ts';
 
 type Content = { type: 'text'; text: string } | { type: 'image'; data: string; mimeType: string };
 const waitSchema = z.number().int().min(0).max(30000).default(1000)
@@ -32,11 +33,16 @@ async function guarded(action: () => Promise<ReturnType<typeof result>>) {
 }
 
 export function createServer(runtime: Runtime): McpServer {
-  const server = new McpServer({ name: 'image-generation', version: '0.1.0' });
+  const server = new McpServer({ name: 'image-generation', version: '0.2.0' });
+  server.registerTool('credential_status', {
+    description: 'Refresh provider key presence and active sources, and return a masked setup command for the user to run in their own terminal. Never accepts or returns API keys; does not authenticate with providers.',
+    inputSchema: z.strictObject({}), annotations: readOnly,
+  }, () => guarded(() => credentialStatus(runtime.config).then(result)));
+
   server.registerTool('list_models', {
     description: 'List the curated image catalogue, documented controls, dated live workflow evidence, and credential presence. Presence does not verify current model access.',
     inputSchema: z.strictObject({ provider: providerSchema.optional() }), annotations: readOnly,
-  }, async ({ provider }) => result({ models: runtime.listModels(provider) }));
+  }, ({ provider }) => guarded(async () => result({ models: await runtime.listModels(provider) })));
 
   server.registerTool('get_model', {
     description: 'Inspect a catalogue model and current OpenRouter Image API endpoint capabilities. Discovery makes no paid generation request.',

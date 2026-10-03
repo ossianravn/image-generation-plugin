@@ -29,7 +29,8 @@ export class Runtime {
     this.adapters = adapters;
   }
 
-  listModels(provider?: Provider) {
+  async listModels(provider?: Provider) {
+    await this.config.refresh();
     return catalogue.filter(model => !provider || model.provider === provider)
       .map(model => ({ ...model, credential_configured: this.config.configured(model.provider) }));
   }
@@ -53,6 +54,7 @@ export class Runtime {
       }
       return this.get(id);
     }
+    await this.config.refresh();
     this.config.key(request.provider);
     const input = await prepare(request, operation, this.store);
     await checkDestination(request.output_directory);
@@ -76,6 +78,7 @@ export class Runtime {
     let record = this.store.get(id);
     if (!record) throw new ImageError('JOB_NOT_FOUND', 'No job with this ID exists in the configured data directory.');
     if (recover && !finalStates.has(record.job.state) && !this.active.has(id) && !isProcessAlive(record.owner_pid)) {
+      await this.config.refresh();
       const claimed = this.store.claim(id, record.owner, randomUUID());
       if (claimed) {
         record = claimed;
@@ -114,6 +117,7 @@ export class Runtime {
   async cancel(id: string): Promise<Job> {
     const job = await this.get(id);
     if (finalStates.has(job.state)) return job;
+    await this.config.refresh();
     this.store.requestCancel(id);
     const adapter = this.adapters[job.provider];
     const record = this.store.get(id);

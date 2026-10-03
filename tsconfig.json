@@ -5,6 +5,7 @@
     "moduleResolution": "NodeNext",
     "resolveJsonModule": true,
     "strict": true,
+    "allowJs": true,
     "noUncheckedIndexedAccess": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
