@@ -2,6 +2,8 @@
 
 ![Image Generation — Create. Reference. Refine. For Codex, Claude Code, and OpenCode.](docs/assets/header.png)
 
+[![Version 0.2.0](https://img.shields.io/badge/version-v0.2.0-CB2727)](#compatibility-and-status) [![Codex plugin](https://img.shields.io/badge/Codex-plugin-202020)](#codex) [![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-D97757?logo=claude&logoColor=white)](#claude-code) [![OpenCode v2 plugin](https://img.shields.io/badge/OpenCode_v2-plugin-343434)](#opencode-v2) [![Node.js 24 or newer](https://img.shields.io/badge/Node.js-24%2B-5FA04E?logo=nodedotjs&logoColor=white)](#install) [![API keys: your own](https://img.shields.io/badge/API_keys-your_own-3568C8)](#connect-your-providers)
+
 **Create the image you need. Keep building in the same conversation.**
 
 Generate project artwork, combine reference images, and refine the result with your coding agent. Images are saved directly into your project. Bring your own **OpenAI, Google Gemini, Replicate, or OpenRouter** keys; configure them once and use them across **Codex, Claude Code, and OpenCode v2**.
