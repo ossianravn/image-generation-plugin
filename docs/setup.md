@@ -13,7 +13,7 @@ The runtime requires Node.js 24 or newer. Generation uses your provider's API cr
 
 ## From a source checkout
 
-Run `npm ci`, then `npm run build`. The executable is `node dist/cli.js`. Use `npm run dev -- <command>` during development; it loads this checkout's `.env.local` explicitly.
+Run `npm ci`, then `npm run build:runtime`. The executable is `node dist/cli.js`. Use `npm run dev -- <command>` during development; it loads this checkout's `.env.local` explicitly. The build command has an explicit suffix so npm Git installation does not trigger unnecessary development dependency preparation.
 
 ## Configure providers once
 

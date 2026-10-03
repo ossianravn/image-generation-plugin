@@ -166,7 +166,7 @@ For contributors or a local checkout:
 git clone https://github.com/ossianravn/image-generation-plugin.git
 cd image-generation-plugin
 npm ci
-npm run build
+npm run build:runtime
 node dist/cli.js setup
 npm run typecheck
 npm test

@@ -13,12 +13,12 @@
   "main": "./index.js",
   "exports": { ".": "./index.js" },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build:runtime": "node scripts/build.mjs",
     "typecheck": "tsc --noEmit",
-    "test": "npm run build && node --test --test-concurrency=1 tests/*.test.ts",
+    "test": "npm run build:runtime && node --test --test-concurrency=1 tests/*.test.ts",
     "dev": "node --env-file-if-exists=.env.local src/cli.ts",
     "validate": "node scripts/validate.mjs",
-    "package": "npm run build && node scripts/package.mjs",
+    "package": "npm run build:runtime && node scripts/package.mjs",
     "test:live": "node --env-file=.env.local scripts/live-check.ts",
     "test:credentials:os": "node scripts/check-credential-store.ts",
     "test:install": "node scripts/check-github-source.mjs"
