@@ -1,0 +1,112 @@
+{
+  "openai:gpt-image-2.5-flare": {
+    "checked_at": "2026-10-03T18:25:56.914Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openai:gpt-image-2.5-sunburst": {
+    "checked_at": "2026-10-03T18:26:39.552Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "gemini:gemini-3.1-flash-image": {
+    "checked_at": "2026-10-03T18:32:58.118Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "gemini:gemini-3-pro-image": {
+    "checked_at": "2026-10-03T18:33:18.138Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "replicate:black-forest-labs/flux-3-image": {
+    "checked_at": "2026-10-03T18:33:10.211Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:bytedance-seed/seedream-5-0-pro": {
+    "checked_at": "2026-10-03T18:29:58.272Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:microsoft/mai-image-2.6": {
+    "checked_at": "2026-10-03T18:31:11.438Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:x-ai/grok-imagine-image-2.0": {
+    "checked_at": "2026-10-03T18:32:28.012Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:qwen/qwen-image-3": {
+    "checked_at": "2026-10-03T18:34:55.135Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:qwen/qwen-image-3-pro": {
+    "checked_at": "2026-10-03T18:40:31.292Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
+  "openrouter:meta/muse-image": {
+    "checked_at": "2026-10-03T18:41:07.790Z",
+    "plugin_version": "0.1.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  }
+}

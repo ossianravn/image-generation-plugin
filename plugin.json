@@ -1,0 +1,9 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "image-generation",
+  "version": "0.1.0",
+  "author": { "name": "ossianravn", "url": "https://github.com/ossianravn" },
+  "description": "Generate and edit project images with OpenAI, Gemini, Replicate, and OpenRouter using your own API keys.",
+  "repository": "https://github.com/ossianravn/image-generation-plugin",
+  "keywords": ["images", "generation", "editing", "mcp"]
+}

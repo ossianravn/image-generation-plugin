@@ -1,0 +1,1145 @@
+{
+  "plugin_version": "0.1.0",
+  "recorded_at": "2026-10-03T18:42:02.898Z",
+  "fixture": "scripts/live-check.ts",
+  "scope": "One text generation, two-reference composition, and single-reference edit per model; controls and quality are not exhaustively tested.",
+  "workflows": [
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-flare",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "c5d55b0a8877e6e5f9dbc95c0a2f917157b0c75c441deda6d6e780e8b33d3b17",
+      "completed_at": "2026-10-03T18:25:35.804Z",
+      "usage": {
+        "input_tokens": 31,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 31
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 227
+      },
+      "artifacts": [
+        {
+          "id": "artifact:c5d55b0a8877e6e5f9dbc95c0a2f917157b0c75c441deda6d6e780e8b33d3b17:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-flare/c5d55b0a8877e6e5f9dbc95c0a2f917157b0c75c441deda6d6e780e8b33d3b17-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "8abee7ddbd5eba99fc298791fc63dcb00eee5f1837cbb04dad3aa9ab7e1f4f25"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-flare",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "60e9b0d3d4f821b169c722b018753a32554a4a64e409239721d8b0a1cdf02c87",
+      "completed_at": "2026-10-03T18:25:46.546Z",
+      "usage": {
+        "input_tokens": 2119,
+        "input_tokens_details": {
+          "image_tokens": 2048,
+          "text_tokens": 71
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 2315
+      },
+      "artifacts": [
+        {
+          "id": "artifact:60e9b0d3d4f821b169c722b018753a32554a4a64e409239721d8b0a1cdf02c87:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-flare/60e9b0d3d4f821b169c722b018753a32554a4a64e409239721d8b0a1cdf02c87-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "19ac49546589896024d2aeb56dd6a348fce4f0b9df67924467334d00c58f0e19"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-flare",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "c8f86fde653dcb0148ad2b249a361ce2c5d129bdc8267e64037a06b05defa50d",
+      "completed_at": "2026-10-03T18:25:56.914Z",
+      "usage": {
+        "input_tokens": 1068,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 44
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 1264
+      },
+      "artifacts": [
+        {
+          "id": "artifact:c8f86fde653dcb0148ad2b249a361ce2c5d129bdc8267e64037a06b05defa50d:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-flare/c8f86fde653dcb0148ad2b249a361ce2c5d129bdc8267e64037a06b05defa50d-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "1da913bc6efde73d8abe467a2f45817fc6519a1d42bc0e857142aa9557730013"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-sunburst",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "aca34f465325ec085c85f8a48d796a3d57898bce6607c37a01fcd411f80be471",
+      "completed_at": "2026-10-03T18:26:05.732Z",
+      "usage": {
+        "input_tokens": 31,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 31
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 227
+      },
+      "artifacts": [
+        {
+          "id": "artifact:aca34f465325ec085c85f8a48d796a3d57898bce6607c37a01fcd411f80be471:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-sunburst/aca34f465325ec085c85f8a48d796a3d57898bce6607c37a01fcd411f80be471-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "3a53ffcb124e0799c9a2be0a7bdff0ae9d13aff4400630ddec5a25802e295557"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-sunburst",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "1cc5a59b279614e721f657272cbab0621f5c4eac9945b8064f141074836d38c6",
+      "completed_at": "2026-10-03T18:26:19.142Z",
+      "usage": {
+        "input_tokens": 2119,
+        "input_tokens_details": {
+          "image_tokens": 2048,
+          "text_tokens": 71
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 2315
+      },
+      "artifacts": [
+        {
+          "id": "artifact:1cc5a59b279614e721f657272cbab0621f5c4eac9945b8064f141074836d38c6:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-sunburst/1cc5a59b279614e721f657272cbab0621f5c4eac9945b8064f141074836d38c6-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "10358e318d2b68f38c7ef3b3eee840bf0f96f5bbc32cddd22b7833811045d416"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.5-sunburst",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "4e65d4542631c724162843a938f9e4a50662efe557584a72a36fe38674a342ab",
+      "completed_at": "2026-10-03T18:26:39.552Z",
+      "usage": {
+        "input_tokens": 1068,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 44
+        },
+        "output_tokens": 196,
+        "output_tokens_details": {
+          "image_tokens": 196,
+          "text_tokens": 0
+        },
+        "total_tokens": 1264
+      },
+      "artifacts": [
+        {
+          "id": "artifact:4e65d4542631c724162843a938f9e4a50662efe557584a72a36fe38674a342ab:0",
+          "path": ".image-generation/live/image-api-2026-10-03/gpt-image-2.5-sunburst/4e65d4542631c724162843a938f9e4a50662efe557584a72a36fe38674a342ab-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "a21b29fe3be0e5a7db24862eb2d7dae229dba9c330fedc4ca54f6158a49b5ed7"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-image",
+      "api": "interactions",
+      "stage": "generate",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "e7d157130bdf6620f736f188a70e4eb86910ed4fb60a10115a45a60833fc2f9d",
+      "completed_at": "2026-10-03T18:32:40.107Z",
+      "usage": {
+        "total_tokens": 1564,
+        "total_input_tokens": 26,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1538,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0,
+        "raw_prompt_token": 468
+      },
+      "artifacts": [
+        {
+          "id": "artifact:e7d157130bdf6620f736f188a70e4eb86910ed4fb60a10115a45a60833fc2f9d:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3.1-flash-image/e7d157130bdf6620f736f188a70e4eb86910ed4fb60a10115a45a60833fc2f9d-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "3e6ce911e5449acdad001c441dc9047c20c7553dc7d5352e95dabf238cb81d87"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-image",
+      "api": "interactions",
+      "stage": "reference",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "af4c870a8c6b37817fa2dac0301a5c8fdd19a0ec4f1bda3a4fee54253efea99e",
+      "completed_at": "2026-10-03T18:32:50.169Z",
+      "usage": {
+        "total_tokens": 3726,
+        "total_input_tokens": 2286,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1440,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0,
+        "raw_prompt_token": 2750
+      },
+      "artifacts": [
+        {
+          "id": "artifact:af4c870a8c6b37817fa2dac0301a5c8fdd19a0ec4f1bda3a4fee54253efea99e:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3.1-flash-image/af4c870a8c6b37817fa2dac0301a5c8fdd19a0ec4f1bda3a4fee54253efea99e-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "44a848328689fe00a3a8630b8d0e6735f451edce991df7d817f23711dbdf3270"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-image",
+      "api": "interactions",
+      "stage": "edit",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "31f737dd997cdc04d793c1d44ef493c72d15dce0c62f01320728e0707f977baa",
+      "completed_at": "2026-10-03T18:32:58.118Z",
+      "usage": {
+        "total_tokens": 2504,
+        "total_input_tokens": 1149,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1355,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 0,
+        "raw_prompt_token": 1602
+      },
+      "artifacts": [
+        {
+          "id": "artifact:31f737dd997cdc04d793c1d44ef493c72d15dce0c62f01320728e0707f977baa:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3.1-flash-image/31f737dd997cdc04d793c1d44ef493c72d15dce0c62f01320728e0707f977baa-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "355982a794c8d3e8fd59444f21f6e46d2a5e96f4a69c25aa67ff96768f8876f0"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3-pro-image",
+      "api": "interactions",
+      "stage": "generate",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "6e0413c045ea8bfabc0f2b73f90906c62035ca112be802a07e4014b082be7aed",
+      "completed_at": "2026-10-03T18:32:46.452Z",
+      "usage": {
+        "total_tokens": 1296,
+        "total_input_tokens": 26,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1214,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 56,
+        "raw_prompt_token": 472
+      },
+      "artifacts": [
+        {
+          "id": "artifact:6e0413c045ea8bfabc0f2b73f90906c62035ca112be802a07e4014b082be7aed:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3-pro-image/6e0413c045ea8bfabc0f2b73f90906c62035ca112be802a07e4014b082be7aed-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "2eae519c763a20f854fc432f624789b0c2cb2e68a7b0f21e32ed178a8ac31998"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3-pro-image",
+      "api": "interactions",
+      "stage": "reference",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "ed8e4aa49cc420d51d50196f6bcd804db0e86b1e685950a1352c4432b0fa0f9a",
+      "completed_at": "2026-10-03T18:33:03.419Z",
+      "usage": {
+        "total_tokens": 2541,
+        "total_input_tokens": 1166,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1226,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 149,
+        "raw_prompt_token": 1634
+      },
+      "artifacts": [
+        {
+          "id": "artifact:ed8e4aa49cc420d51d50196f6bcd804db0e86b1e685950a1352c4432b0fa0f9a:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3-pro-image/ed8e4aa49cc420d51d50196f6bcd804db0e86b1e685950a1352c4432b0fa0f9a-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "7350c492abd1e1745d6d5b152dc09911f589c1b521498b196aaad62cecbe5483"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-3-pro-image",
+      "api": "interactions",
+      "stage": "edit",
+      "run": "gemini-stable-2026-10-03",
+      "job_id": "79f603951a9a87357014e64134b23389efbc965aaaee858ab970d2b90b0236ce",
+      "completed_at": "2026-10-03T18:33:18.138Z",
+      "usage": {
+        "total_tokens": 1910,
+        "total_input_tokens": 589,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1205,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 116,
+        "raw_prompt_token": 1046
+      },
+      "artifacts": [
+        {
+          "id": "artifact:79f603951a9a87357014e64134b23389efbc965aaaee858ab970d2b90b0236ce:0",
+          "path": ".image-generation/live/gemini-stable-2026-10-03/gemini-3-pro-image/79f603951a9a87357014e64134b23389efbc965aaaee858ab970d2b90b0236ce-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "46ea0637b56988473105184e13bc2df96abe03e025fa0817d3cc711cc5738e35"
+        }
+      ]
+    },
+    {
+      "provider": "replicate",
+      "model": "black-forest-labs/flux-3-image",
+      "api": "predictions",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "cfaefb8555a95cabf14e6bb38396c8ecbc01d9c27f5db864bc1e5c275290bf27",
+      "completed_at": "2026-10-03T18:30:18.821Z",
+      "version": "hidden",
+      "usage": {
+        "image_output_count": 1,
+        "predict_time": 18.836498408,
+        "total_time": 18.87418169
+      },
+      "artifacts": [
+        {
+          "id": "artifact:cfaefb8555a95cabf14e6bb38396c8ecbc01d9c27f5db864bc1e5c275290bf27:0",
+          "path": ".image-generation/live/image-api-2026-10-03/black-forest-labs--flux-3-image/cfaefb8555a95cabf14e6bb38396c8ecbc01d9c27f5db864bc1e5c275290bf27-1.webp",
+          "mime_type": "image/webp",
+          "width": 880,
+          "height": 1184,
+          "sha256": "5c5923dc63724b7188d701576ac57303d0a61f2ccaee1b9d981d5e89974d1f65"
+        }
+      ]
+    },
+    {
+      "provider": "replicate",
+      "model": "black-forest-labs/flux-3-image",
+      "api": "predictions",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "f28826d98cd1117d586766868515f110b94886c80452b88c95eeaabf24cd9ddf",
+      "completed_at": "2026-10-03T18:31:57.476Z",
+      "version": "hidden",
+      "usage": {
+        "image_output_count": 1,
+        "predict_time": 96.607001689,
+        "total_time": 96.623503557
+      },
+      "artifacts": [
+        {
+          "id": "artifact:f28826d98cd1117d586766868515f110b94886c80452b88c95eeaabf24cd9ddf:0",
+          "path": ".image-generation/live/image-api-2026-10-03/black-forest-labs--flux-3-image/f28826d98cd1117d586766868515f110b94886c80452b88c95eeaabf24cd9ddf-1.webp",
+          "mime_type": "image/webp",
+          "width": 880,
+          "height": 1184,
+          "sha256": "e47efd07704644250020b94f2b017c00311d602d86f2d65837656ec4a35f7d83"
+        }
+      ]
+    },
+    {
+      "provider": "replicate",
+      "model": "black-forest-labs/flux-3-image",
+      "api": "predictions",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "0aa1fc256ca299f3aade73e71fb7c2615aa2d1168324ab81276f5ff90a800327",
+      "completed_at": "2026-10-03T18:33:10.211Z",
+      "version": "hidden",
+      "usage": {
+        "image_output_count": 1,
+        "predict_time": 70.966150756,
+        "total_time": 70.983283214
+      },
+      "artifacts": [
+        {
+          "id": "artifact:0aa1fc256ca299f3aade73e71fb7c2615aa2d1168324ab81276f5ff90a800327:0",
+          "path": ".image-generation/live/image-api-2026-10-03/black-forest-labs--flux-3-image/0aa1fc256ca299f3aade73e71fb7c2615aa2d1168324ab81276f5ff90a800327-1.webp",
+          "mime_type": "image/webp",
+          "width": 880,
+          "height": 1184,
+          "sha256": "8b69b64ad39f0338bbd4f79a4fb309b670e15de9d1a78f1e6eadf1c66dcbbb64"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "bytedance-seed/seedream-5-0-pro",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "eba923c245f6a198ef3512ef772e6cf2d1fd092837caa4f595095283a8a37007",
+      "completed_at": "2026-10-03T18:27:33.312Z",
+      "routed_provider": "Seed",
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 4096,
+        "total_tokens": 4130,
+        "cost": 0.045,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.045,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.045
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4096
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:eba923c245f6a198ef3512ef772e6cf2d1fd092837caa4f595095283a8a37007:0",
+          "path": ".image-generation/live/image-api-2026-10-03/bytedance-seed--seedream-5-0-pro/eba923c245f6a198ef3512ef772e6cf2d1fd092837caa4f595095283a8a37007-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "5b4b04f8ed2888650b3af67d7a9270d75463087a59b5a67e61d6e5bed7b0c824"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "bytedance-seed/seedream-5-0-pro",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "603d1f3652e133cccc9e69ad0b5deafb34aa47657993548866dd4007cd41bc01",
+      "completed_at": "2026-10-03T18:28:44.843Z",
+      "routed_provider": "Seed",
+      "usage": {
+        "prompt_tokens": 57,
+        "completion_tokens": 4096,
+        "total_tokens": 4153,
+        "cost": 0.048,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.048,
+          "upstream_inference_prompt_cost": 0.003,
+          "upstream_inference_completions_cost": 0.045
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4096
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:603d1f3652e133cccc9e69ad0b5deafb34aa47657993548866dd4007cd41bc01:0",
+          "path": ".image-generation/live/image-api-2026-10-03/bytedance-seed--seedream-5-0-pro/603d1f3652e133cccc9e69ad0b5deafb34aa47657993548866dd4007cd41bc01-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "a8119b6ca722b85b9469f98d061487f6dc41d0bf517ab387320865ebc7f14057"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "bytedance-seed/seedream-5-0-pro",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "9dbe94d7af8c7595199d1b2a917a307084ba41edef1a905ead8270e2d33a5590",
+      "completed_at": "2026-10-03T18:29:58.272Z",
+      "routed_provider": "Seed",
+      "usage": {
+        "prompt_tokens": 35,
+        "completion_tokens": 4096,
+        "total_tokens": 4131,
+        "cost": 0.045,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.045,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.045
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4096
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:9dbe94d7af8c7595199d1b2a917a307084ba41edef1a905ead8270e2d33a5590:0",
+          "path": ".image-generation/live/image-api-2026-10-03/bytedance-seed--seedream-5-0-pro/9dbe94d7af8c7595199d1b2a917a307084ba41edef1a905ead8270e2d33a5590-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "7fe1e08fd7002f7a6ace0b3230c13f487bc045ddf1e5aae75abae9ac39077c7c"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "microsoft/mai-image-2.6",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "99164bb4547022d30f7e8eaa784f7715d9832ec7d89d286eb10ab6334d04e892",
+      "completed_at": "2026-10-03T18:30:24.153Z",
+      "routed_provider": "Azure",
+      "usage": {
+        "prompt_tokens": 24,
+        "completion_tokens": 1024,
+        "total_tokens": 1048,
+        "cost": 0.039032,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.039032,
+          "upstream_inference_prompt_cost": 0.00012,
+          "upstream_inference_completions_cost": 0.038912
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1024
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:99164bb4547022d30f7e8eaa784f7715d9832ec7d89d286eb10ab6334d04e892:0",
+          "path": ".image-generation/live/image-api-2026-10-03/microsoft--mai-image-2.6/99164bb4547022d30f7e8eaa784f7715d9832ec7d89d286eb10ab6334d04e892-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "df4aeaf67facd2646434f8be89c3fabb89c2489cb2841b7d95403a66d0a55810"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "microsoft/mai-image-2.6",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "d36aeede67386c4159cdfc1cdec8367603d2e3fa7bcee713005d62c0d391202a",
+      "completed_at": "2026-10-03T18:30:47.761Z",
+      "routed_provider": "Azure",
+      "usage": {
+        "prompt_tokens": 1280,
+        "completion_tokens": 1024,
+        "total_tokens": 2304,
+        "cost": 0.049152,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.049152,
+          "upstream_inference_prompt_cost": 0.01024,
+          "upstream_inference_completions_cost": 0.038912
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1024
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:d36aeede67386c4159cdfc1cdec8367603d2e3fa7bcee713005d62c0d391202a:0",
+          "path": ".image-generation/live/image-api-2026-10-03/microsoft--mai-image-2.6/d36aeede67386c4159cdfc1cdec8367603d2e3fa7bcee713005d62c0d391202a-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "047610f8784aa1c99b27d7df82818ed5ce6ff6367fe2434ad9768efa4d681538"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "microsoft/mai-image-2.6",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "2e43beef95609ec179304331f5a406eeafd113ca2c4f6dbef92890c916f14bf2",
+      "completed_at": "2026-10-03T18:31:11.438Z",
+      "routed_provider": "Azure",
+      "usage": {
+        "prompt_tokens": 1024,
+        "completion_tokens": 1024,
+        "total_tokens": 2048,
+        "cost": 0.047104,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.047104,
+          "upstream_inference_prompt_cost": 0.008192,
+          "upstream_inference_completions_cost": 0.038912
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 1024
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:2e43beef95609ec179304331f5a406eeafd113ca2c4f6dbef92890c916f14bf2:0",
+          "path": ".image-generation/live/image-api-2026-10-03/microsoft--mai-image-2.6/2e43beef95609ec179304331f5a406eeafd113ca2c4f6dbef92890c916f14bf2-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "49e31e5e63720ebf00863e61bbc89c0e6dbf510275dd5b3e6de37513c54e0b57"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "x-ai/grok-imagine-image-2.0",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "4cf5aa782da553d83e49c3c85ae29172fe00545a9a25b7666f9d2568327b319a",
+      "completed_at": "2026-10-03T18:32:04.871Z",
+      "routed_provider": "SpaceXAI",
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 4175,
+        "total_tokens": 4209,
+        "cost": 0.06,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.06,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.06
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:4cf5aa782da553d83e49c3c85ae29172fe00545a9a25b7666f9d2568327b319a:0",
+          "path": ".image-generation/live/image-api-2026-10-03/x-ai--grok-imagine-image-2.0/4cf5aa782da553d83e49c3c85ae29172fe00545a9a25b7666f9d2568327b319a-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "3805cb8806c4d9a57b2740f5e82ee4a747c93452397450690b639cf4045f275a"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "x-ai/grok-imagine-image-2.0",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "12c75fbfcd3f55f3b31e30aa43a9d34d7cef9ef12acb5a4e4d1d89a39df59f16",
+      "completed_at": "2026-10-03T18:32:18.287Z",
+      "routed_provider": "SpaceXAI",
+      "usage": {
+        "prompt_tokens": 57,
+        "completion_tokens": 4175,
+        "total_tokens": 4232,
+        "cost": 0.08,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.08,
+          "upstream_inference_prompt_cost": 0.02,
+          "upstream_inference_completions_cost": 0.06
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:12c75fbfcd3f55f3b31e30aa43a9d34d7cef9ef12acb5a4e4d1d89a39df59f16:0",
+          "path": ".image-generation/live/image-api-2026-10-03/x-ai--grok-imagine-image-2.0/12c75fbfcd3f55f3b31e30aa43a9d34d7cef9ef12acb5a4e4d1d89a39df59f16-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "e7d9a4c92c67294ef6e45a9a755eb30113a3cc3083543d9666b7505e519e78b9"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "x-ai/grok-imagine-image-2.0",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "a25e91613e2d4d51fd25445fec1a8d730e13cf2dfacb5120f9a0107d060662e7",
+      "completed_at": "2026-10-03T18:32:28.012Z",
+      "routed_provider": "SpaceXAI",
+      "usage": {
+        "prompt_tokens": 35,
+        "completion_tokens": 4175,
+        "total_tokens": 4210,
+        "cost": 0.07,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.07,
+          "upstream_inference_prompt_cost": 0.01,
+          "upstream_inference_completions_cost": 0.06
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:a25e91613e2d4d51fd25445fec1a8d730e13cf2dfacb5120f9a0107d060662e7:0",
+          "path": ".image-generation/live/image-api-2026-10-03/x-ai--grok-imagine-image-2.0/a25e91613e2d4d51fd25445fec1a8d730e13cf2dfacb5120f9a0107d060662e7-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "d7b0ebfd6087f6a70794fb2476bac422c71a3486b840f3bf238477b2b5c41350"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "e21329bd5af610ad2f3560319b423e0e6ca252abd4908da25a05cf02987170fc",
+      "completed_at": "2026-10-03T18:33:15.928Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 4175,
+        "total_tokens": 4209,
+        "cost": 0.03,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.03,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.03
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:e21329bd5af610ad2f3560319b423e0e6ca252abd4908da25a05cf02987170fc:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3/e21329bd5af610ad2f3560319b423e0e6ca252abd4908da25a05cf02987170fc-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "f9bcc8c4af1385782cc58212707ebaf47a679be3fd3f8572dc50f8a834f17dd1"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "cc26f373fedc33926f67ed45f3a92120c569d58d799887627fea70a841116c6e",
+      "completed_at": "2026-10-03T18:34:30.595Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 57,
+        "completion_tokens": 4175,
+        "total_tokens": 4232,
+        "cost": 0.036,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.036,
+          "upstream_inference_prompt_cost": 0.006,
+          "upstream_inference_completions_cost": 0.03
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:cc26f373fedc33926f67ed45f3a92120c569d58d799887627fea70a841116c6e:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3/cc26f373fedc33926f67ed45f3a92120c569d58d799887627fea70a841116c6e-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "951a89c5b2c0edc33abf1031b64704c841fe028b0aaa26bb4e7d84119dba15fa"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "e865589bbdb2de9229c4e5575c63d39d108339bb6606c76f48b1b994ec8115ed",
+      "completed_at": "2026-10-03T18:34:55.135Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 35,
+        "completion_tokens": 4175,
+        "total_tokens": 4210,
+        "cost": 0.033,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.033,
+          "upstream_inference_prompt_cost": 0.003,
+          "upstream_inference_completions_cost": 0.03
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:e865589bbdb2de9229c4e5575c63d39d108339bb6606c76f48b1b994ec8115ed:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3/e865589bbdb2de9229c4e5575c63d39d108339bb6606c76f48b1b994ec8115ed-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "7e930dccd3e88f76ec62030ec92bff4016b70a882908016ee56aaec726d4e8b6"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3-pro",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "3aa8d0de10b2c91bfce4a53eb57c7aaca6718b21b485a4b76bbc6361a4f7bbd0",
+      "completed_at": "2026-10-03T18:35:44.219Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 4175,
+        "total_tokens": 4209,
+        "cost": 0.04,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.04,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.04
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:3aa8d0de10b2c91bfce4a53eb57c7aaca6718b21b485a4b76bbc6361a4f7bbd0:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3-pro/3aa8d0de10b2c91bfce4a53eb57c7aaca6718b21b485a4b76bbc6361a4f7bbd0-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "39139397139c39124f5e091f602e7164cc949adaf951b203e08753ce9a6868a0"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3-pro",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "19618e17a4cd554064cb5be785b25c66edee3b8b7df2c7692ad77e01c3a6e1e5",
+      "completed_at": "2026-10-03T18:37:47.557Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 57,
+        "completion_tokens": 4175,
+        "total_tokens": 4232,
+        "cost": 0.046,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.046,
+          "upstream_inference_prompt_cost": 0.006,
+          "upstream_inference_completions_cost": 0.04
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:19618e17a4cd554064cb5be785b25c66edee3b8b7df2c7692ad77e01c3a6e1e5:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3-pro/19618e17a4cd554064cb5be785b25c66edee3b8b7df2c7692ad77e01c3a6e1e5-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "4765870a4a1d8c382f62aa2bff53e8964da3c8af63343c83e0407aba15dd451c"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "qwen/qwen-image-3-pro",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "d5afa0fa8ec6aaa34016f7632969b7ff2adf3560654e6332b90099f3b9eec037",
+      "completed_at": "2026-10-03T18:40:31.292Z",
+      "routed_provider": "Alibaba Cloud Int.",
+      "usage": {
+        "prompt_tokens": 35,
+        "completion_tokens": 4175,
+        "total_tokens": 4210,
+        "cost": 0.043,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.043,
+          "upstream_inference_prompt_cost": 0.003,
+          "upstream_inference_completions_cost": 0.04
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 4175
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:d5afa0fa8ec6aaa34016f7632969b7ff2adf3560654e6332b90099f3b9eec037:0",
+          "path": ".image-generation/live/image-api-2026-10-03/qwen--qwen-image-3-pro/d5afa0fa8ec6aaa34016f7632969b7ff2adf3560654e6332b90099f3b9eec037-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "f31147971d6dd9bfb85a22e02752e6dd5aa633b81a015d3854b5a90fa832ff16"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "meta/muse-image",
+      "api": "images",
+      "stage": "generate",
+      "run": "image-api-2026-10-03",
+      "job_id": "553bec86481f3922886fa54adf356500bfd7b2e13c6743ec988d1a52ae284cc8",
+      "completed_at": "2026-10-03T18:40:39.860Z",
+      "routed_provider": "Meta",
+      "usage": {
+        "prompt_tokens": 34,
+        "completion_tokens": 629,
+        "total_tokens": 663,
+        "cost": 0.01,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.01,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.01
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 629
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:553bec86481f3922886fa54adf356500bfd7b2e13c6743ec988d1a52ae284cc8:0",
+          "path": ".image-generation/live/image-api-2026-10-03/meta--muse-image/553bec86481f3922886fa54adf356500bfd7b2e13c6743ec988d1a52ae284cc8-1.webp",
+          "mime_type": "image/webp",
+          "width": 1920,
+          "height": 1280,
+          "sha256": "7dd6e14349ee2a3d6f2c1b5d3de0e0320e486526da9663112c0c93c045c605e4"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "meta/muse-image",
+      "api": "images",
+      "stage": "reference",
+      "run": "image-api-2026-10-03",
+      "job_id": "b3397aee8d1aa9298fde2d2c71de1fe4ad16117028d683567ca0ddb7c3a1b8df",
+      "completed_at": "2026-10-03T18:40:56.152Z",
+      "routed_provider": "Meta",
+      "usage": {
+        "prompt_tokens": 57,
+        "completion_tokens": 846,
+        "total_tokens": 903,
+        "cost": 0.01,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.01,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.01
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 846
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:b3397aee8d1aa9298fde2d2c71de1fe4ad16117028d683567ca0ddb7c3a1b8df:0",
+          "path": ".image-generation/live/image-api-2026-10-03/meta--muse-image/b3397aee8d1aa9298fde2d2c71de1fe4ad16117028d683567ca0ddb7c3a1b8df-1.webp",
+          "mime_type": "image/webp",
+          "width": 1920,
+          "height": 1280,
+          "sha256": "ffd4c12f9c8195c836cb2671cd0bd62fbf12c7b1593977b54cb450fb26092c5d"
+        }
+      ]
+    },
+    {
+      "provider": "openrouter",
+      "model": "meta/muse-image",
+      "api": "images",
+      "stage": "edit",
+      "run": "image-api-2026-10-03",
+      "job_id": "ddd6cd1bf482b33a196b52dc869c72bb73759a2691959e41f374c096713cf887",
+      "completed_at": "2026-10-03T18:41:07.790Z",
+      "routed_provider": "Meta",
+      "usage": {
+        "prompt_tokens": 35,
+        "completion_tokens": 566,
+        "total_tokens": 601,
+        "cost": 0.01,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.01,
+          "upstream_inference_prompt_cost": 0,
+          "upstream_inference_completions_cost": 0.01
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "image_tokens": 566
+        }
+      },
+      "artifacts": [
+        {
+          "id": "artifact:ddd6cd1bf482b33a196b52dc869c72bb73759a2691959e41f374c096713cf887:0",
+          "path": ".image-generation/live/image-api-2026-10-03/meta--muse-image/ddd6cd1bf482b33a196b52dc869c72bb73759a2691959e41f374c096713cf887-1.webp",
+          "mime_type": "image/webp",
+          "width": 1920,
+          "height": 1280,
+          "sha256": "bb6a85087154612b32f236ea112775b73e1c9a29bde73ba7c8baf7f478f87245"
+        }
+      ]
+    }
+  ]
+}
