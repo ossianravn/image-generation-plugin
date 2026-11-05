@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { fixture, config, response } from './helpers.ts';
 import { Http } from '../src/http.ts';
+import { ImageError } from '../src/errors.ts';
 import { openaiAdapter } from '../src/providers/openai.ts';
 import { geminiAdapter } from '../src/providers/gemini.ts';
 import { openrouterAdapter } from '../src/providers/openrouter.ts';
@@ -29,6 +30,54 @@ test('OpenAI reference edits send actual image bytes as multipart', async () => 
   assert.equal((await openaiAdapter(config(f.directory), http).submit(input('openai', 'gpt-image-2.5-flare', f.bytes), context)).images.length, 1);
 });
 
+test('OpenAI markup edits send the annotation layer beside the source image', async () => {
+  const f = await fixture();
+  const http = new Http(async (_url, init) => {
+    assert.ok(init?.body instanceof FormData);
+    assert.equal(init.body.get('complexity'), 'low');
+    const markup = init.body.get('markup');
+    assert.ok(markup instanceof Blob);
+    assert.equal(markup.type, 'image/png');
+    return response({ data: [{ b64_json: f.bytes.toString('base64') }] });
+  });
+  const request = input('openai', 'gpt-image-2.6-flare', f.bytes);
+  request.markup = { path: 'C:/markup.png', bytes: f.bytes, width: 384, height: 384, mime: 'image/png' };
+  request.request.options.complexity = 'low';
+  assert.equal((await openaiAdapter(config(f.directory), http).submit(request, context)).images.length, 1);
+});
+
+test('OpenAI SVG requests name the author model and keep its usage, or explain that one is needed', async () => {
+  const f = await fixture();
+  let reply = response({ data: [{ b64_json: 'PHN2Zy8+' }], usage: { output_tokens: 900 }, svg_usage: { output_tokens: 2400 } });
+  const http = new Http(async (url, init) => {
+    assert.equal(String(url), 'https://api.openai.com/v1/images/generations');
+    const body = JSON.parse(String(init?.body));
+    assert.deepEqual(body.svg, { model: 'gpt-6-astra' });
+    assert.equal('svg_model' in body, false);
+    return reply;
+  });
+  const request = { ...input('openai', 'gpt-image-2.6-flare', f.bytes), references: [] };
+  request.request.options = { output_format: 'svg', svg_model: 'gpt-6-astra' };
+  const result = await openaiAdapter(config(f.directory), http).submit(request, context);
+  assert.deepEqual(result.usage, { output_tokens: 900, svg_usage: { output_tokens: 2400 } });
+  reply = new Response(JSON.stringify({ error: { type: 'invalid_request_error', code: 'missing_required_parameter', param: 'svg.model' } }), { status: 400 });
+  await assert.rejects(openaiAdapter(config(f.directory), http).submit(request, context), /SVG_MODEL_REQUIRED|options\.svg_model/);
+});
+
+test('OpenAI moderation blocks report stage and categories without provider message text', async () => {
+  const http = new Http(async () => new Response(JSON.stringify({ error: { type: 'image_generation_user_error',
+    code: 'moderation_blocked', message: 'private-prompt echoed here',
+    moderation_details: { moderation_stage: 'input', categories: ['violence', 'private prompt text'] } } }), { status: 400 }));
+  await assert.rejects(http.json('https://api.example.test', {}, true), error => {
+    assert.ok(error instanceof ImageError);
+    assert.equal(error.code, 'MODERATION_BLOCKED');
+    assert.equal(error.uncertain, false);
+    assert.match(error.message, /at the input stage \(violence\)/);
+    assert.doesNotMatch(error.message, /private/);
+    return true;
+  });
+});
+
 test('Gemini sends references without storage and extracts every final image, excluding thoughts', async () => {
   const f = await fixture();
   const http = new Http(async (_url, init) => {
@@ -43,6 +92,19 @@ test('Gemini sends references without storage and extracts every final image, ex
   });
   const result = await geminiAdapter(config(f.directory), http).submit(input('gemini', 'gemini-3.1-flash-image', f.bytes), context);
   assert.deepEqual(result.images, [{ base64: 'final-one' }, { base64: 'final-two' }]);
+});
+
+test('Gemini passes a thinking level as generation config', async () => {
+  const f = await fixture();
+  const http = new Http(async (_url, init) => {
+    const body = JSON.parse(String(init?.body));
+    assert.equal(body.model, 'models/gemini-nano-banana-2.1');
+    assert.deepEqual(body.generation_config, { thinking_level: 'high' });
+    return response({ steps: [{ type: 'model_output', content: [{ type: 'image', data: 'final' }] }] });
+  });
+  const request = input('gemini', 'gemini-nano-banana-2.1', f.bytes);
+  request.request.options.thinking_level = 'high';
+  assert.equal((await geminiAdapter(config(f.directory), http).submit(request, context)).images.length, 1);
 });
 
 test('OpenRouter refuses unsupported controls before a paid POST', async () => {

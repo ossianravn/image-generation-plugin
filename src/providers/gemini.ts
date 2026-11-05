@@ -25,6 +25,7 @@ export function geminiAdapter(config: Config, http: Http): ProviderAdapter {
           ] }],
           response_format: { type: 'image', aspect_ratio: request.options.aspect_ratio,
             image_size: request.options.resolution },
+          ...(request.options.thinking_level ? { generation_config: { thinking_level: request.options.thinking_level } } : {}),
         }),
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': config.key('gemini') },
         signal: context.signal,

@@ -1,12 +1,12 @@
 {
   "name": "@ossianravn/image-generation-plugin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
       "name": "@ossianravn/image-generation-plugin",
-      "version": "0.2.0",
+      "version": "0.3.0",
       "dependencies": {
         "@inquirer/prompts": "8.7.2",
         "@modelcontextprotocol/server": "2.3.0",

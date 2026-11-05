@@ -1,8 +1,8 @@
 {
-  "plugin_version": "0.1.0",
-  "recorded_at": "2026-10-03T18:42:02.898Z",
+  "recorded_with": "0.3.0",
+  "recorded_at": "2026-11-05T16:50:21.098Z",
   "fixture": "scripts/live-check.ts",
-  "scope": "One text generation, two-reference composition, and single-reference edit per model; controls and quality are not exhaustively tested.",
+  "scope": "One text generation, two-reference composition, and single-reference edit per model, plus markup, GIF, and SVG stages where a model documents them; controls and quality are not exhaustively tested.",
   "workflows": [
     {
       "provider": "openai",
@@ -10,6 +10,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "c5d55b0a8877e6e5f9dbc95c0a2f917157b0c75c441deda6d6e780e8b33d3b17",
       "completed_at": "2026-10-03T18:25:35.804Z",
       "usage": {
@@ -42,6 +43,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "60e9b0d3d4f821b169c722b018753a32554a4a64e409239721d8b0a1cdf02c87",
       "completed_at": "2026-10-03T18:25:46.546Z",
       "usage": {
@@ -74,6 +76,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "c8f86fde653dcb0148ad2b249a361ce2c5d129bdc8267e64037a06b05defa50d",
       "completed_at": "2026-10-03T18:25:56.914Z",
       "usage": {
@@ -106,6 +109,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "aca34f465325ec085c85f8a48d796a3d57898bce6607c37a01fcd411f80be471",
       "completed_at": "2026-10-03T18:26:05.732Z",
       "usage": {
@@ -138,6 +142,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "1cc5a59b279614e721f657272cbab0621f5c4eac9945b8064f141074836d38c6",
       "completed_at": "2026-10-03T18:26:19.142Z",
       "usage": {
@@ -170,6 +175,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "4e65d4542631c724162843a938f9e4a50662efe557584a72a36fe38674a342ab",
       "completed_at": "2026-10-03T18:26:39.552Z",
       "usage": {
@@ -197,11 +203,499 @@
       ]
     },
     {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "generate",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "587bf55d1b00695a1a2818424721b5bdb9c8f4c79650567b63a40c16688374c3",
+      "completed_at": "2026-11-05T16:44:23.452Z",
+      "usage": {
+        "input_tokens": 31,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 31
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 855
+      },
+      "artifacts": [
+        {
+          "id": "artifact:587bf55d1b00695a1a2818424721b5bdb9c8f4c79650567b63a40c16688374c3:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-flare/587bf55d1b00695a1a2818424721b5bdb9c8f4c79650567b63a40c16688374c3-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "7ac6d5ad53bc8c795ad20ea25c7184291d6b7c018dd6b517e1932c4333f922e9"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "reference",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "cba3917d28eea9bfb80915b665ae15796517559e8284aa17c7c5d775c60ee83b",
+      "completed_at": "2026-11-05T16:44:30.675Z",
+      "usage": {
+        "input_tokens": 2119,
+        "input_tokens_details": {
+          "image_tokens": 2048,
+          "text_tokens": 71
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 2943
+      },
+      "artifacts": [
+        {
+          "id": "artifact:cba3917d28eea9bfb80915b665ae15796517559e8284aa17c7c5d775c60ee83b:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-flare/cba3917d28eea9bfb80915b665ae15796517559e8284aa17c7c5d775c60ee83b-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "b927dea9d7b6a8e86fa100cb2e7cc1bdaa584988cbffff95eab13465cbe19487"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "edit",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "9f903fbb98b20399783407b38bc05d28a153b85ce4f34d4c7914c0ce1f69399b",
+      "completed_at": "2026-11-05T16:44:39.165Z",
+      "usage": {
+        "input_tokens": 1068,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 44
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 1892
+      },
+      "artifacts": [
+        {
+          "id": "artifact:9f903fbb98b20399783407b38bc05d28a153b85ce4f34d4c7914c0ce1f69399b:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-flare/9f903fbb98b20399783407b38bc05d28a153b85ce4f34d4c7914c0ce1f69399b-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "05b9866cea262c2199bcb5fdadb7e76de0f9b5e5c70c1aaa08e64858f89de575"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "markup",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "1325f4859ee42149a9175e33fc05f65d0f000268875490df7c0c6c3494692c07",
+      "completed_at": "2026-11-05T16:44:50.793Z",
+      "usage": {
+        "input_tokens": 1189,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 165
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 2013
+      },
+      "artifacts": [
+        {
+          "id": "artifact:1325f4859ee42149a9175e33fc05f65d0f000268875490df7c0c6c3494692c07:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-flare/1325f4859ee42149a9175e33fc05f65d0f000268875490df7c0c6c3494692c07-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "25e67df572b903268a4f7f627ec3146b283500311b6ca910015d9da82105b754"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "gif",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "77f25013a4be98f87e3177875e81385b442887434a0f4a16bf2a3bd54aa4418e",
+      "completed_at": "2026-11-05T16:45:01.402Z",
+      "usage": {
+        "input_tokens": 58,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 58
+        },
+        "output_tokens": 555,
+        "output_tokens_details": {
+          "image_tokens": 555,
+          "text_tokens": 0
+        },
+        "total_tokens": 613
+      },
+      "artifacts": [
+        {
+          "id": "artifact:77f25013a4be98f87e3177875e81385b442887434a0f4a16bf2a3bd54aa4418e:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-flare/77f25013a4be98f87e3177875e81385b442887434a0f4a16bf2a3bd54aa4418e-1.gif",
+          "mime_type": "image/gif",
+          "width": 512,
+          "height": 512,
+          "sha256": "9c856a9a42891870627feee36cd6c6f6b16ef0d3f8922e2408cf7ec49fa20543",
+          "frames": 4,
+          "duration_ms": 800
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-flare",
+      "api": "images",
+      "stage": "svg",
+      "run": "models-2026-11-05-svg",
+      "plugin_version": "0.3.0",
+      "job_id": "8a6e387dbeb9ea39627f3dc53ce241dde97fc28c1e69806435d57a546cb234e5",
+      "completed_at": "2026-11-05T16:48:17.242Z",
+      "usage": {
+        "input_tokens": 92,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 92
+        },
+        "output_tokens": 903,
+        "output_tokens_details": {
+          "image_tokens": 903,
+          "text_tokens": 0
+        },
+        "total_tokens": 995
+      },
+      "artifacts": [
+        {
+          "id": "artifact:8a6e387dbeb9ea39627f3dc53ce241dde97fc28c1e69806435d57a546cb234e5:0",
+          "path": ".image-generation/live/models-2026-11-05-svg/gpt-image-2.6-flare/8a6e387dbeb9ea39627f3dc53ce241dde97fc28c1e69806435d57a546cb234e5-1.svg",
+          "mime_type": "image/svg+xml",
+          "width": 1312,
+          "height": 1199,
+          "sha256": "2b3c080d43e7385a79c4d9d1ccd87ef0769dd7825579f42768b869b5053775a8"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "generate",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "e7eed9322647fba382b31b2bc5e95cf50ff50481af104c6f1a5a2b3fcfe59455",
+      "completed_at": "2026-11-05T16:44:27.068Z",
+      "usage": {
+        "input_tokens": 31,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 31
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 855
+      },
+      "artifacts": [
+        {
+          "id": "artifact:e7eed9322647fba382b31b2bc5e95cf50ff50481af104c6f1a5a2b3fcfe59455:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-sunburst/e7eed9322647fba382b31b2bc5e95cf50ff50481af104c6f1a5a2b3fcfe59455-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "83ca60d114abac5f6ae394a4fd04e5b2bb6f1f71ac2e97cdbcccbf3bf696fe80"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "reference",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "29d809745b4f24c3417855a63175ae7b8b80e6c0ac12616cefb2ccb7f8e3100e",
+      "completed_at": "2026-11-05T16:44:50.511Z",
+      "usage": {
+        "input_tokens": 2119,
+        "input_tokens_details": {
+          "image_tokens": 2048,
+          "text_tokens": 71
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 2943
+      },
+      "artifacts": [
+        {
+          "id": "artifact:29d809745b4f24c3417855a63175ae7b8b80e6c0ac12616cefb2ccb7f8e3100e:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-sunburst/29d809745b4f24c3417855a63175ae7b8b80e6c0ac12616cefb2ccb7f8e3100e-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "189a073454a2894a35894ba61196284f09d33c074034b914a34df4d15aca5655"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "edit",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "527a8ee757605a411c61ad8e82865d21d04c6d7fc3bec74a85a34a450a556efe",
+      "completed_at": "2026-11-05T16:45:12.870Z",
+      "usage": {
+        "input_tokens": 1068,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 44
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 1892
+      },
+      "artifacts": [
+        {
+          "id": "artifact:527a8ee757605a411c61ad8e82865d21d04c6d7fc3bec74a85a34a450a556efe:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-sunburst/527a8ee757605a411c61ad8e82865d21d04c6d7fc3bec74a85a34a450a556efe-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "6e70539e5a15aff83c6066e7acfbd3213b40769bdba47671fa2c596856239d38"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "markup",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "9948f21bfcb5953564cd2910fd3181b0e24fee3e4578b4bb8c759230848b84a0",
+      "completed_at": "2026-11-05T16:45:31.164Z",
+      "usage": {
+        "input_tokens": 1179,
+        "input_tokens_details": {
+          "image_tokens": 1024,
+          "text_tokens": 155
+        },
+        "output_tokens": 824,
+        "output_tokens_details": {
+          "image_tokens": 824,
+          "text_tokens": 0
+        },
+        "total_tokens": 2003
+      },
+      "artifacts": [
+        {
+          "id": "artifact:9948f21bfcb5953564cd2910fd3181b0e24fee3e4578b4bb8c759230848b84a0:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-sunburst/9948f21bfcb5953564cd2910fd3181b0e24fee3e4578b4bb8c759230848b84a0-1.png",
+          "mime_type": "image/png",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "9e130c02d2749fdac2398c02616046018d70f3c4496246e498441c668f2c2a6e"
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "gif",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "c16874c959da4bb8082b2f45d83adab878c18e6abd308a884a85035d54972d89",
+      "completed_at": "2026-11-05T16:45:47.069Z",
+      "usage": {
+        "input_tokens": 58,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 58
+        },
+        "output_tokens": 555,
+        "output_tokens_details": {
+          "image_tokens": 555,
+          "text_tokens": 0
+        },
+        "total_tokens": 613
+      },
+      "artifacts": [
+        {
+          "id": "artifact:c16874c959da4bb8082b2f45d83adab878c18e6abd308a884a85035d54972d89:0",
+          "path": ".image-generation/live/models-2026-11-05/gpt-image-2.6-sunburst/c16874c959da4bb8082b2f45d83adab878c18e6abd308a884a85035d54972d89-1.gif",
+          "mime_type": "image/gif",
+          "width": 512,
+          "height": 512,
+          "sha256": "cd32a47512f55b4de230f6aceda9f1acad64971001bcb256504fa2eee960cd02",
+          "frames": 4,
+          "duration_ms": 800
+        }
+      ]
+    },
+    {
+      "provider": "openai",
+      "model": "gpt-image-2.6-sunburst",
+      "api": "images",
+      "stage": "svg",
+      "run": "models-2026-11-05-svg",
+      "plugin_version": "0.3.0",
+      "job_id": "3ef7bd864ebb45c023e1440e32fbfad5cea27f39299957187ea833e845633063",
+      "completed_at": "2026-11-05T16:49:43.317Z",
+      "usage": {
+        "input_tokens": 92,
+        "input_tokens_details": {
+          "image_tokens": 0,
+          "text_tokens": 92
+        },
+        "output_tokens": 903,
+        "output_tokens_details": {
+          "image_tokens": 903,
+          "text_tokens": 0
+        },
+        "total_tokens": 995
+      },
+      "artifacts": [
+        {
+          "id": "artifact:3ef7bd864ebb45c023e1440e32fbfad5cea27f39299957187ea833e845633063:0",
+          "path": ".image-generation/live/models-2026-11-05-svg/gpt-image-2.6-sunburst/3ef7bd864ebb45c023e1440e32fbfad5cea27f39299957187ea833e845633063-1.svg",
+          "mime_type": "image/svg+xml",
+          "width": 1312,
+          "height": 1199,
+          "sha256": "6b9892945c4836b2370b2a594b2182c0fd58fcb980f96cde0a44d8bee0f247fa"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-nano-banana-2.1",
+      "api": "interactions",
+      "stage": "generate",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "9e9e75884e7e13302d0a5992da599ec0740d4e10eeafc1b5b160c518b845617b",
+      "completed_at": "2026-11-05T16:44:24.373Z",
+      "usage": {
+        "total_tokens": 1930,
+        "total_input_tokens": 26,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1337,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 567,
+        "initial_input_tokens": 142
+      },
+      "artifacts": [
+        {
+          "id": "artifact:9e9e75884e7e13302d0a5992da599ec0740d4e10eeafc1b5b160c518b845617b:0",
+          "path": ".image-generation/live/models-2026-11-05/gemini-nano-banana-2.1/9e9e75884e7e13302d0a5992da599ec0740d4e10eeafc1b5b160c518b845617b-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "d99e4b60732c35718439a3d3cd0f162d7ece79d9c325b4f1d639289e82be5a5d"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-nano-banana-2.1",
+      "api": "interactions",
+      "stage": "reference",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "dd304b9648c012c6d74c5b56e4e73066bba4d3f0561a5d3d30cbe1d46e6a6eb1",
+      "completed_at": "2026-11-05T16:44:38.435Z",
+      "usage": {
+        "total_tokens": 4106,
+        "total_input_tokens": 2286,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1377,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 443,
+        "initial_input_tokens": 2424
+      },
+      "artifacts": [
+        {
+          "id": "artifact:dd304b9648c012c6d74c5b56e4e73066bba4d3f0561a5d3d30cbe1d46e6a6eb1:0",
+          "path": ".image-generation/live/models-2026-11-05/gemini-nano-banana-2.1/dd304b9648c012c6d74c5b56e4e73066bba4d3f0561a5d3d30cbe1d46e6a6eb1-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "acd9ebc9b570cc8daa3981cafde906daa5bd2e272070ee61ede2189ced7f13f6"
+        }
+      ]
+    },
+    {
+      "provider": "gemini",
+      "model": "gemini-nano-banana-2.1",
+      "api": "interactions",
+      "stage": "edit",
+      "run": "models-2026-11-05",
+      "plugin_version": "0.3.0",
+      "job_id": "4d0b0bb1ef255d0eb0ae61802ea5e4474fe8efc35bc3a1ba8d89f690846f4a1c",
+      "completed_at": "2026-11-05T16:44:47.462Z",
+      "usage": {
+        "total_tokens": 2556,
+        "total_input_tokens": 1149,
+        "total_cached_tokens": 0,
+        "total_output_tokens": 1326,
+        "total_tool_use_tokens": 0,
+        "total_thought_tokens": 81,
+        "initial_input_tokens": 1276
+      },
+      "artifacts": [
+        {
+          "id": "artifact:4d0b0bb1ef255d0eb0ae61802ea5e4474fe8efc35bc3a1ba8d89f690846f4a1c:0",
+          "path": ".image-generation/live/models-2026-11-05/gemini-nano-banana-2.1/4d0b0bb1ef255d0eb0ae61802ea5e4474fe8efc35bc3a1ba8d89f690846f4a1c-1.jpg",
+          "mime_type": "image/jpeg",
+          "width": 1024,
+          "height": 1024,
+          "sha256": "85c86878b948ac6266bf889578f44deb596b75021540eff38ba48eb1fc303b60"
+        }
+      ]
+    },
+    {
       "provider": "gemini",
       "model": "gemini-3.1-flash-image",
       "api": "interactions",
       "stage": "generate",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "e7d157130bdf6620f736f188a70e4eb86910ed4fb60a10115a45a60833fc2f9d",
       "completed_at": "2026-10-03T18:32:40.107Z",
       "usage": {
@@ -230,6 +724,7 @@
       "api": "interactions",
       "stage": "reference",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "af4c870a8c6b37817fa2dac0301a5c8fdd19a0ec4f1bda3a4fee54253efea99e",
       "completed_at": "2026-10-03T18:32:50.169Z",
       "usage": {
@@ -258,6 +753,7 @@
       "api": "interactions",
       "stage": "edit",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "31f737dd997cdc04d793c1d44ef493c72d15dce0c62f01320728e0707f977baa",
       "completed_at": "2026-10-03T18:32:58.118Z",
       "usage": {
@@ -286,6 +782,7 @@
       "api": "interactions",
       "stage": "generate",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "6e0413c045ea8bfabc0f2b73f90906c62035ca112be802a07e4014b082be7aed",
       "completed_at": "2026-10-03T18:32:46.452Z",
       "usage": {
@@ -314,6 +811,7 @@
       "api": "interactions",
       "stage": "reference",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "ed8e4aa49cc420d51d50196f6bcd804db0e86b1e685950a1352c4432b0fa0f9a",
       "completed_at": "2026-10-03T18:33:03.419Z",
       "usage": {
@@ -342,6 +840,7 @@
       "api": "interactions",
       "stage": "edit",
       "run": "gemini-stable-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "79f603951a9a87357014e64134b23389efbc965aaaee858ab970d2b90b0236ce",
       "completed_at": "2026-10-03T18:33:18.138Z",
       "usage": {
@@ -370,6 +869,7 @@
       "api": "predictions",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "cfaefb8555a95cabf14e6bb38396c8ecbc01d9c27f5db864bc1e5c275290bf27",
       "completed_at": "2026-10-03T18:30:18.821Z",
       "version": "hidden",
@@ -395,6 +895,7 @@
       "api": "predictions",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "f28826d98cd1117d586766868515f110b94886c80452b88c95eeaabf24cd9ddf",
       "completed_at": "2026-10-03T18:31:57.476Z",
       "version": "hidden",
@@ -420,6 +921,7 @@
       "api": "predictions",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "0aa1fc256ca299f3aade73e71fb7c2615aa2d1168324ab81276f5ff90a800327",
       "completed_at": "2026-10-03T18:33:10.211Z",
       "version": "hidden",
@@ -445,6 +947,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "eba923c245f6a198ef3512ef772e6cf2d1fd092837caa4f595095283a8a37007",
       "completed_at": "2026-10-03T18:27:33.312Z",
       "routed_provider": "Seed",
@@ -484,6 +987,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "603d1f3652e133cccc9e69ad0b5deafb34aa47657993548866dd4007cd41bc01",
       "completed_at": "2026-10-03T18:28:44.843Z",
       "routed_provider": "Seed",
@@ -523,6 +1027,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "9dbe94d7af8c7595199d1b2a917a307084ba41edef1a905ead8270e2d33a5590",
       "completed_at": "2026-10-03T18:29:58.272Z",
       "routed_provider": "Seed",
@@ -562,6 +1067,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "99164bb4547022d30f7e8eaa784f7715d9832ec7d89d286eb10ab6334d04e892",
       "completed_at": "2026-10-03T18:30:24.153Z",
       "routed_provider": "Azure",
@@ -601,6 +1107,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "d36aeede67386c4159cdfc1cdec8367603d2e3fa7bcee713005d62c0d391202a",
       "completed_at": "2026-10-03T18:30:47.761Z",
       "routed_provider": "Azure",
@@ -640,6 +1147,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "2e43beef95609ec179304331f5a406eeafd113ca2c4f6dbef92890c916f14bf2",
       "completed_at": "2026-10-03T18:31:11.438Z",
       "routed_provider": "Azure",
@@ -679,6 +1187,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "4cf5aa782da553d83e49c3c85ae29172fe00545a9a25b7666f9d2568327b319a",
       "completed_at": "2026-10-03T18:32:04.871Z",
       "routed_provider": "SpaceXAI",
@@ -718,6 +1227,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "12c75fbfcd3f55f3b31e30aa43a9d34d7cef9ef12acb5a4e4d1d89a39df59f16",
       "completed_at": "2026-10-03T18:32:18.287Z",
       "routed_provider": "SpaceXAI",
@@ -757,6 +1267,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "a25e91613e2d4d51fd25445fec1a8d730e13cf2dfacb5120f9a0107d060662e7",
       "completed_at": "2026-10-03T18:32:28.012Z",
       "routed_provider": "SpaceXAI",
@@ -796,6 +1307,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "e21329bd5af610ad2f3560319b423e0e6ca252abd4908da25a05cf02987170fc",
       "completed_at": "2026-10-03T18:33:15.928Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -835,6 +1347,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "cc26f373fedc33926f67ed45f3a92120c569d58d799887627fea70a841116c6e",
       "completed_at": "2026-10-03T18:34:30.595Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -874,6 +1387,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "e865589bbdb2de9229c4e5575c63d39d108339bb6606c76f48b1b994ec8115ed",
       "completed_at": "2026-10-03T18:34:55.135Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -913,6 +1427,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "3aa8d0de10b2c91bfce4a53eb57c7aaca6718b21b485a4b76bbc6361a4f7bbd0",
       "completed_at": "2026-10-03T18:35:44.219Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -952,6 +1467,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "19618e17a4cd554064cb5be785b25c66edee3b8b7df2c7692ad77e01c3a6e1e5",
       "completed_at": "2026-10-03T18:37:47.557Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -991,6 +1507,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "d5afa0fa8ec6aaa34016f7632969b7ff2adf3560654e6332b90099f3b9eec037",
       "completed_at": "2026-10-03T18:40:31.292Z",
       "routed_provider": "Alibaba Cloud Int.",
@@ -1030,6 +1547,7 @@
       "api": "images",
       "stage": "generate",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "553bec86481f3922886fa54adf356500bfd7b2e13c6743ec988d1a52ae284cc8",
       "completed_at": "2026-10-03T18:40:39.860Z",
       "routed_provider": "Meta",
@@ -1069,6 +1587,7 @@
       "api": "images",
       "stage": "reference",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "b3397aee8d1aa9298fde2d2c71de1fe4ad16117028d683567ca0ddb7c3a1b8df",
       "completed_at": "2026-10-03T18:40:56.152Z",
       "routed_provider": "Meta",
@@ -1108,6 +1627,7 @@
       "api": "images",
       "stage": "edit",
       "run": "image-api-2026-10-03",
+      "plugin_version": "0.1.0",
       "job_id": "ddd6cd1bf482b33a196b52dc869c72bb73759a2691959e41f374c096713cf887",
       "completed_at": "2026-10-03T18:41:07.790Z",
       "routed_provider": "Meta",

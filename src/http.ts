@@ -2,6 +2,39 @@ import { ImageError } from './errors.ts';
 
 export type Fetch = typeof globalThis.fetch;
 
+// Provider error bodies can echo prompts or credentials. Keep only short identifier-shaped
+// fields (type, code, param, moderation stage and categories), never message text.
+const token = (value: unknown): string | undefined =>
+  typeof value === 'string' && /^[A-Za-z0-9_.-]{1,64}$/.test(value) ? value : undefined;
+
+async function errorDetail(response: Response) {
+  try {
+    const { error } = await response.json() as { error?: Record<string, unknown> };
+    if (!error || typeof error !== 'object') return {};
+    const moderation = error.moderation_details as Record<string, unknown> | undefined;
+    const categories = Array.isArray(moderation?.categories) ? moderation.categories.map(token).filter(Boolean) : [];
+    return { type: token(error.type), code: token(error.code) ?? token(error.status), param: token(error.param),
+      stage: token(moderation?.moderation_stage), categories: categories.join(', ') };
+  } catch { return {}; }
+}
+
+function providerError(status: number, detail: Awaited<ReturnType<typeof errorDetail>>, paid: boolean): ImageError {
+  if (detail.code === 'moderation_blocked') {
+    const where = `${detail.stage ? ` at the ${detail.stage} stage` : ''}${detail.categories ? ` (${detail.categories})` : ''}`;
+    return new ImageError('MODERATION_BLOCKED', `The provider's safety system blocked this request${where}. Change the prompt or images before trying again.`);
+  }
+  if (detail.type === 'image_generation_user_error') {
+    return new ImageError('IMAGE_USER_ERROR', `The provider rejected the prompt or images${detail.code ? ` (${detail.code})` : ''}. Change them before trying again.`);
+  }
+  const action = status === 401 || status === 403 ? 'Check the API key and model access.'
+    : status === 402 ? 'Check the provider account balance.'
+      : status === 429 ? 'The provider rate limit or quota was reached.'
+        : 'Check model availability and the requested image controls.';
+  const hint = [detail.type, detail.code, detail.param && `param ${detail.param}`].filter(Boolean).join(', ');
+  return new ImageError(`HTTP_${status}`, `Provider returned HTTP ${status}${hint ? ` (${hint})` : ''}. ${action}`,
+    paid && (status >= 500 || status === 408), detail.param);
+}
+
 export class Http {
   private readonly fetcher: Fetch;
 
@@ -16,15 +49,7 @@ export class Http {
         ? 'The provider connection ended without a confirmed outcome. This request was not resubmitted.'
         : 'The provider could not be reached. Retry fetching the existing job.', paid);
     }
-    if (!response.ok) {
-      const action = response.status === 401 || response.status === 403 ? 'Check the API key and model access.'
-        : response.status === 402 ? 'Check the provider account balance.'
-          : response.status === 429 ? 'The provider rate limit or quota was reached.'
-            : 'Check model availability and the requested image controls.';
-      // Provider error bodies can echo prompts or credentials; keep diagnostics at the HTTP boundary.
-      throw new ImageError(`HTTP_${response.status}`, `Provider returned HTTP ${response.status}. ${action}`,
-        paid && (response.status >= 500 || response.status === 408));
-    }
+    if (!response.ok) throw providerError(response.status, await errorDetail(response), paid);
     try { return await response.json(); }
     catch { throw new ImageError('INVALID_RESPONSE', 'The provider returned an unreadable response.', paid); }
   }

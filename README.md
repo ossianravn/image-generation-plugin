@@ -2,13 +2,13 @@
 
 ![Image Generation — Create. Reference. Refine. For Codex, Claude Code, and OpenCode.](docs/assets/header.png)
 
-[![Version 0.2.0](https://img.shields.io/badge/version-v0.2.0-CB2727)](#compatibility-and-status) [![Codex plugin](https://img.shields.io/badge/Codex-plugin-202020)](#codex) [![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-D97757?logo=claude&logoColor=white)](#claude-code) [![OpenCode v2 plugin](https://img.shields.io/badge/OpenCode_v2-plugin-343434)](#opencode-v2) [![Node.js 24 or newer](https://img.shields.io/badge/Node.js-24%2B-5FA04E?logo=nodedotjs&logoColor=white)](#install) [![API keys: your own](https://img.shields.io/badge/API_keys-your_own-3568C8)](#connect-your-providers)
+[![Version 0.3.0](https://img.shields.io/badge/version-v0.3.0-CB2727)](#compatibility-and-status) [![Codex plugin](https://img.shields.io/badge/Codex-plugin-202020)](#codex) [![Claude Code plugin](https://img.shields.io/badge/Claude_Code-plugin-D97757?logo=claude&logoColor=white)](#claude-code) [![OpenCode v2 plugin](https://img.shields.io/badge/OpenCode_v2-plugin-343434)](#opencode-v2) [![Node.js 24 or newer](https://img.shields.io/badge/Node.js-24%2B-5FA04E?logo=nodedotjs&logoColor=white)](#install) [![API keys: your own](https://img.shields.io/badge/API_keys-your_own-3568C8)](#connect-your-providers)
 
 **Create the image you need. Keep building in the same conversation.**
 
 Generate project artwork, combine reference images, and refine the result with your coding agent. Images are saved directly into your project. Bring your own **OpenAI, Google Gemini, Replicate, or OpenRouter** keys; configure them once and use them across **Codex, Claude Code, and OpenCode v2**.
 
-**11 curated models** · **Generation + references + editing** · **Shared OS credential storage**
+**14 curated models** · **Generation + references + editing** · **GIF and SVG output** · **Shared OS credential storage**
 
 **Table of contents** · [Install](#install) · [Connect providers](#connect-your-providers) · [First image](#create-your-first-image) · [Models](#supported-models) · [Troubleshooting](#troubleshooting)
 
@@ -256,16 +256,28 @@ the shape, lighting, and composition, and save a new version.
 
 Each revision gets its own file. The plugin does not silently change your selected provider or model, and it does not automatically submit another paid generation after an uncertain outcome.
 
+### Animate it or make a vector
+
+GPT Image 2.6 can return an animated GIF or an SVG from a text prompt:
+
+```text
+Use Image Generation with GPT Image 2.6 Flare to make a looping GIF
+of a red ceramic mug rocking gently from side to side. Save it in
+assets/animations.
+```
+
+GIF and SVG start from your description alone; they can't use reference images. To point at the exact area to change in an edit, give the agent a transparent PNG with your circles or sketches drawn on it, the same size as the image, and ask it to use that as markup.
+
 ## Supported models
 
 | Provider | Curated models |
 | --- | --- |
-| OpenAI | GPT Image 2.5 Flare, GPT Image 2.5 Sunburst |
-| Google Gemini | Nano Banana 2, Nano Banana Pro |
+| OpenAI | GPT Image 2.6 Flare, GPT Image 2.6 Sunburst, GPT Image 2.5 Flare, GPT Image 2.5 Sunburst |
+| Google Gemini | Nano Banana 2.1, Nano Banana 2, Nano Banana Pro |
 | Replicate | FLUX 3 Image |
 | OpenRouter | Seedream 5.0 Pro, MAI-Image-2.6, Grok Imagine Image 2.0, Qwen Image 3, Qwen Image 3 Pro, Muse Image |
 
-All 11 models completed text generation, composition using two references, and a subsequent edit in the **3 October 2026** live validation run. Those 33 outputs were saved, decoded, checked, and visually reviewed. Available sizes, formats, masks, transparency, and reference limits vary by model; the core workflow tests do not cover every option.
+The original 11 models completed text generation, composition using two references, and a subsequent edit in the **3 October 2026** live validation run. Those 33 outputs were saved, decoded, checked, and visually reviewed. GPT Image 2.6 Flare, GPT Image 2.6 Sunburst, and Nano Banana 2.1 passed the same journey on **5 November 2026**, and both GPT Image 2.6 models also passed markup, GIF, and SVG checks. Available sizes, formats, masks, transparency, and reference limits vary by model; the core workflow tests do not cover every option.
 
 Ask **“Which image models can I use?”** to see your configured providers and the catalogue. See the [tested model catalogue](docs/model-catalogue.md) for exact model IDs, controls, and evidence.
 
@@ -293,6 +305,7 @@ Gemini requests use `store=false`, and FLUX web grounding defaults off. See [dat
 | A saved key is not being used | Check `credential_status`: environment variables and explicit credential files take precedence. |
 | OS credential store unavailable | Unlock the OS store. Linux needs a running Secret Service such as GNOME Keyring or KWallet; use an explicit environment/file override for headless use. |
 | Provider rejects a request | Check the key's account access, API credits, and the selected model's supported options. |
+| `MODERATION_BLOCKED` | The provider's safety system refused the prompt or images. Change them; an unchanged retry is blocked again. |
 | Connection lost during generation | Ask the agent to retrieve the existing job before requesting another generation. |
 | Preview is unavailable | Open the returned file path. Preview rendering depends on the client. |
 
@@ -300,7 +313,7 @@ For credential rotation/removal, direct MCP configuration, updates, and uninstal
 
 ## Compatibility and status
 
-**v0.2.0 is an early release**, developed against Codex CLI 0.160.0, Claude Code 2.1.288, OpenCode 2.0.18, and Node 24.19.0. The portable package follows [Agent Plugins 1.0](https://agent-plugins.org/specification), with installation adapters for each client.
+**v0.3.0 is an early release**, developed against Codex CLI 0.160.0, Claude Code 2.1.288, OpenCode 2.0.18, and Node 24.19.0. The portable package follows [Agent Plugins 1.0](https://agent-plugins.org/specification), with installation adapters for each client.
 
 Direct GitHub installation has been checked in all three clients on Windows. Automated checks passed in Windows, macOS, and Linux CI. The runtime also has real MCP subprocess checks, a Windows credential-store check, and recorded live provider workflows. Native macOS Keychain/Linux Secret Service access and image rendering in fresh interactive client sessions still need acceptance testing. See the [validation report](docs/validation.md) for the exact boundaries of the evidence.
 
@@ -337,4 +350,4 @@ The shared MCP service exposes `credential_status`, `list_models`, `get_model`, 
 
 ---
 
-[Setup guide](docs/setup.md) · [Model catalogue](docs/model-catalogue.md) · [Validation](docs/validation.md) · [Architecture](docs/implementation-plan.md) · [Dated research](docs/research-2026-10-03.md)
+[Setup guide](docs/setup.md) · [Model catalogue](docs/model-catalogue.md) · [Validation](docs/validation.md) · [Architecture](docs/implementation-plan.md) · [Dated research](docs/research-2026-10-03.md) · [Provider update, 5 November](docs/research-2026-11-05.md)

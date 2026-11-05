@@ -7,9 +7,11 @@ import { loadConfig } from '../src/config.ts';
 import { Runtime } from '../src/runtime.ts';
 import { JobStore } from '../src/store.ts';
 import { publicError } from '../src/errors.ts';
-import type { ImageOptions, Job, ModelDescriptor } from '../src/contracts.ts';
+import type { ImageOptions, ImageRequest, Job, ModelDescriptor } from '../src/contracts.ts';
 
-const { values } = parseArgs({ options: { model: { type: 'string' }, run: { type: 'string' } } });
+// --stage reruns one independent stage (generate, gif, or svg); --svg-model names the SVG author model.
+const { values } = parseArgs({ options: { model: { type: 'string' }, run: { type: 'string' },
+  stage: { type: 'string' }, 'svg-model': { type: 'string' } } });
 const run = values.run ?? new Date().toISOString().replace(/[:.]/g, '-');
 if (!/^[a-zA-Z0-9_-]+$/.test(run)) throw new Error('Use a filename-safe run identifier.');
 const directory = resolve('.image-generation/live', run);
@@ -19,6 +21,11 @@ const runtime = new Runtime(config, await JobStore.open(config.dataDirectory));
 const cube = join(directory, 'reference-cube.png');
 await sharp(Buffer.from('<svg width="512" height="512" xmlns="http://www.w3.org/2000/svg"><rect width="512" height="512" fill="#eeeeee"/><path d="M140 180L250 115L370 180L260 245Z" fill="#ffe56b"/><path d="M140 180L260 245V390L140 325Z" fill="#ddb224"/><path d="M260 245L370 180V325L260 390Z" fill="#f9cb36"/></svg>'))
   .png().toFile(cube);
+// A transparent annotation circling the centre of a 1024-square OpenAI output.
+const markup = join(directory, 'markup-circle.png');
+await sharp(Buffer.from('<svg width="1024" height="1024" xmlns="http://www.w3.org/2000/svg"><circle cx="512" cy="512" r="260" fill="none" stroke="#ff2020" stroke-width="16"/></svg>'))
+  .png().toFile(markup);
+const pkg = JSON.parse(await readFile('package.json', 'utf8'));
 
 function options(model: ModelDescriptor): ImageOptions {
   if (model.provider === 'openai') return { quality: 'low', size: '1024x1024' };
@@ -52,21 +59,31 @@ try {
   for (const model of selected) {
     const outputs = join(directory, model.id.replaceAll('/', '--'));
     let references: string[] = [];
-    const stages = [
+    let generated = '';
+    const formats: readonly string[] = model.values?.output_format ?? [];
+    const stages: [string, string, Partial<ImageRequest>?][] = [
       ['generate', 'Studio product photograph of one red ceramic mug with a white circular emblem. Neutral light gray background, soft daylight, no text.'],
       ['reference', 'Use the mug from the first reference, preserving its red color, silhouette and white circular emblem. Place it on a blue tabletop next to the yellow cube from the second reference. Exactly one mug and one cube, soft daylight.'],
       ['edit', 'Change only the red mug body to cobalt blue. Preserve the white circular emblem, the yellow cube, the tabletop, lighting, and composition.'],
     ];
-    for (const [stage, prompt] of stages) {
+    // Feature stages run after the core journey and only for models whose descriptor lists them.
+    if (model.markup) stages.push(['markup', 'Recolor the mug inside the red circle to matte forest green. Keep its shape, the emblem, the background and lighting unchanged. Remove the red circle from the finished photo.', { markup }]);
+    if (formats.includes('gif')) stages.push(['gif', 'One red ceramic mug with a white circular emblem rocking gently left and right on a light gray background. Seamless loop that returns to the starting pose.',
+      { references: [], options: { quality: 'low', output_format: 'gif', frame_count: 4 } }]);
+    if (formats.includes('svg')) stages.push(['svg', 'Flat vector icon of a red ceramic mug with a white circular emblem, simple shapes, no text.',
+      { references: [], options: { quality: 'low', output_format: 'svg', ...(values['svg-model'] ? { svg_model: values['svg-model'] } : {}) } }]);
+    for (const [stage, prompt, overrides] of stages.filter(([name]) => !values.stage || name === values.stage)) {
+      if (stage === 'markup') references = [generated];
       try {
         const job = await finish(await runtime.start({
           request_id: `${run}:${model.provider}:${model.id}:${stage}`, provider: model.provider,
-          model: model.id, prompt, output_directory: outputs, references, options: options(model),
-        }, stage === 'edit' ? 'edit' : 'generate'));
+          model: model.id, prompt, output_directory: outputs, references, options: options(model), ...overrides,
+        }, stage === 'edit' || stage === 'markup' ? 'edit' : 'generate'));
         evidence.push({ provider: model.provider, model: model.id, stage: stage!, job });
         console.log(JSON.stringify({ model: model.id, stage, state: job.state, error: job.error,
           artifacts: job.artifacts.map(image => ({ path: image.path, width: image.width, height: image.height })), usage: job.usage }));
         if (job.state !== 'completed' || !job.artifacts[0]) break;
+        if (stage === 'generate') generated = job.artifacts[0].id;
         references = stage === 'generate' ? [job.artifacts[0].id, cube] : [job.artifacts[0].id];
       } catch (error) {
         const failure = publicError(error);
@@ -75,7 +92,7 @@ try {
         break;
       } finally {
         await writeFile(reportPath, JSON.stringify({ run, checked_at: new Date().toISOString(),
-          plugin_version: '0.1.0', node: process.version, visual_review: 'pending', evidence }, null, 2));
+          plugin_version: pkg.version, node: process.version, visual_review: 'pending', evidence }, null, 2));
       }
     }
   }

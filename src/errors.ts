@@ -1,12 +1,15 @@
 export class ImageError extends Error {
   readonly code: string;
   readonly uncertain: boolean;
+  /** The request parameter a provider named in its error, when it named one. */
+  readonly param?: string;
 
-  constructor(code: string, message: string, uncertain = false) {
+  constructor(code: string, message: string, uncertain = false, param?: string) {
     super(message);
     this.name = 'ImageError';
     this.code = code;
     this.uncertain = uncertain;
+    if (param) this.param = param;
   }
 }
 

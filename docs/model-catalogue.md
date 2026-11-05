@@ -1,8 +1,8 @@
 # Tested model catalogue
 
-**Checked:** 3 October 2026. **Plugin:** 0.1.0. **Scope:** one primary provider route per model.
+**Checked:** 3 October 2026 (plugin 0.1.0) and 5 November 2026 (plugin 0.3.0, three added models). **Scope:** one primary provider route per model.
 
-All 11 models completed the same three-stage live journey: text generation, composition from two references, and an edit of the resulting image. Every output was decoded, saved locally, and checked against its recorded SHA-256. The 33 resulting images were visually reviewed. Full operation records are in [live-validation.json](live-validation.json); testing limits and host evidence are in [validation.md](validation.md).
+The original 11 models completed the same three-stage live journey: text generation, composition from two references, and an edit of the resulting image. Every output was decoded, saved locally, and checked against its recorded SHA-256. The 33 resulting images were visually reviewed. Full operation records are in [live-validation.json](live-validation.json); testing limits and host evidence are in [validation.md](validation.md).
 
 ## Primary routes
 
@@ -24,6 +24,25 @@ Sources for direct routes: [OpenAI image guide](https://developers.openai.com/ap
 
 The listed maximums are capability metadata, not maximum-count live tests. The live run used one output per call and two reference inputs at the composition stage. Tests used low-quality 1024-square OpenAI output, 1K square Gemini output, FLUX 1k with grounding off, and supported 1K/aspect controls on OpenRouter. Muse used its defaults and returned 1920×1280 WebP. FLUX returned 880×1184 WebP; other selected routes returned 1024×1024 images.
 
+## Added 5 November 2026
+
+The three added models passed the same three-stage journey on plugin 0.3.0. Both GPT Image 2.6 models also passed markup, GIF, and SVG stages. Records are in [live-validation.json](live-validation.json); sources and open questions are in the [5 November research note](research-2026-11-05.md).
+
+| Model | Provider and API | Core journey | Feature stages | Reference limit |
+| --- | --- | --- | --- | --- |
+| GPT Image 2.6 Flare (`gpt-image-2.6-flare`) | OpenAI Images | Passed / passed / passed | Markup, GIF, SVG passed | Not published; enforced by the API |
+| GPT Image 2.6 Sunburst (`gpt-image-2.6-sunburst`) | OpenAI Images | Passed / passed / passed | Markup, GIF, SVG passed | Not published; enforced by the API |
+| Nano Banana 2.1 (`gemini-nano-banana-2.1`) | Gemini stable v1 Interactions | Passed / passed / passed | None defined | 14 |
+
+New controls: `complexity`, `frame_count`, `frame_duration_ms`, and `svg_model` on GPT Image 2.6; `thinking_level` (`minimal`, `medium`, `high`) and resolutions `1K`, `2K`, `4K` on Nano Banana 2.1. GPT Image 2.5 now also lists `xhigh` and `max` quality and markup edits; its 3 October evidence predates those options. Descriptors carry a `values` map wherever a model accepts only part of a control's shared range, and the plugin refuses other values, GIF or SVG requests with references, and out-of-range OpenAI sizes before a paid request.
+
+Observations from the run:
+
+- Nano Banana 2.1 worked on the stable `v1` endpoint, although Google's new examples use `v1beta`. It returned 1024×1024 JPEG at `1K`.
+- Markup moved each edit to the circled area. Asked to recolor "the mug inside the red circle", Flare recolored only the circled emblem while Sunburst recolored the whole mug. Both removed the circle.
+- GIF requests with `frame_count: 4` and automatic size returned four 512×512 frames at 200 ms, looping indefinitely.
+- SVG requests failed until they named an author model: this account has SVG author selection enabled, which the guide does not mention. With `svg_model: gpt-6-astra` both models returned static vector mugs that passed the plugin's safety check. Neither run recorded the author's separate `svg_usage`, because both started before the plugin kept that field.
+
 ## Visual observations
 
 Each journey generated a red mug with a white circular emblem, combined that mug with a separate yellow-cube reference on a blue tabletop, and changed the mug to blue. All 11 final edits visibly changed the mug color while retaining the emblem, cube, and broad composition. These are qualitative sample observations, not pixel-identity guarantees or a model ranking.
@@ -44,6 +63,6 @@ Masks, transparent backgrounds, alternate compression/formats, batch counts, see
 
 ## Maintenance
 
-Run `npm run test:live -- --model MODEL_ID --run UNIQUE_RUN_NAME` only when a paid validation run is intended. Reusing a run ID retrieves the same durable actions. Run `node scripts/record-evidence.ts` afterward to reconcile completed jobs and verify original bytes; this command never calls a provider. `node scripts/review-sheets.mjs` builds local contact sheets for visual inspection.
+Run `npm run test:live -- --model MODEL_ID --run UNIQUE_RUN_NAME` only when a paid validation run is intended. After the three core stages, the script runs markup, GIF, and SVG stages for models whose descriptor lists them; those count as feature workflows, not core ones. Add `--svg-model MODEL` when the OpenAI account requires an SVG author, and `--stage generate|gif|svg` with a new run ID to rerun one independent stage. Reusing a run ID retrieves the same durable actions. Run `node scripts/record-evidence.ts` afterward to reconcile completed jobs and verify original bytes; this command never calls a provider. `node scripts/review-sheets.mjs` builds local contact sheets for visual inspection.
 
 The supplied [portrait benchmark](https://openrouter.ai/benchmarks/media/images/portraits?variant=studio-headshot) helped identify model families. It was not used as evidence of this plugin's compatibility. Recheck account access and official API requirements before a release; the recorded success is dated, not a promise of future availability.

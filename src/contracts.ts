@@ -5,13 +5,21 @@ export interface ImageOptions {
   size?: string;
   aspect_ratio?: string;
   resolution?: string;
-  quality?: 'auto' | 'low' | 'medium' | 'high';
+  quality?: 'auto' | 'low' | 'medium' | 'high' | 'xhigh' | 'max';
   background?: 'auto' | 'opaque' | 'transparent';
-  output_format?: 'png' | 'jpeg' | 'webp';
+  output_format?: 'png' | 'jpeg' | 'webp' | 'gif' | 'svg';
   output_compression?: number;
+  complexity?: 'low' | 'medium' | 'high';
+  frame_count?: number;
+  frame_duration_ms?: number;
+  svg_model?: string;
+  thinking_level?: 'minimal' | 'medium' | 'high';
   seed?: number;
   grounding?: boolean;
 }
+
+/** Documented values for a control, where a model accepts only part of the shared range. */
+export type ControlValues = { [K in keyof ImageOptions]?: readonly NonNullable<ImageOptions[K]>[] };
 
 export interface ImageRequest {
   request_id: string;
@@ -21,6 +29,7 @@ export interface ImageRequest {
   output_directory: string;
   references: string[];
   mask?: string;
+  markup?: string;
   count: number;
   options: ImageOptions;
 }
@@ -31,6 +40,8 @@ export interface InputImage {
   mime: string;
   width: number;
   height: number;
+  frames?: number;
+  duration_ms?: number;
 }
 
 export interface PreparedRequest {
@@ -38,6 +49,7 @@ export interface PreparedRequest {
   operation: Operation;
   references: InputImage[];
   mask?: InputImage;
+  markup?: InputImage;
 }
 
 export type ImageOutput = { base64: string } | { url: string };
@@ -68,6 +80,8 @@ export interface Artifact {
   width: number;
   height: number;
   sha256: string;
+  frames?: number;
+  duration_ms?: number;
 }
 
 export type JobState = 'submitted' | 'running' | 'saving' | 'completed'
@@ -107,7 +121,9 @@ export interface ModelDescriptor {
   max_references: number | null;
   max_count: number;
   controls: (keyof ImageOptions)[];
+  values?: ControlValues;
   masks: boolean;
+  markup: boolean;
   evidence: 'documented';
   source: string;
   checked_at: string;

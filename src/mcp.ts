@@ -33,7 +33,7 @@ async function guarded(action: () => Promise<ReturnType<typeof result>>) {
 }
 
 export function createServer(runtime: Runtime): McpServer {
-  const server = new McpServer({ name: 'image-generation', version: '0.2.0' });
+  const server = new McpServer({ name: 'image-generation', version: '0.3.0' });
   server.registerTool('credential_status', {
     description: 'Refresh provider key presence and active sources, and return a masked setup command for the user to run in their own terminal. Never accepts or returns API keys; does not authenticate with providers.',
     inputSchema: z.strictObject({}), annotations: readOnly,
@@ -53,8 +53,8 @@ export function createServer(runtime: Runtime): McpServer {
   for (const operation of ['generate', 'edit'] as const) {
     server.registerTool(`${operation}_image`, {
       description: operation === 'generate'
-        ? 'Generate images, optionally guided by local references. Sends the prompt/images to the selected paid API and saves original files locally. Reuse request_id to recover the same action.'
-        : 'Edit the first reference image, with optional additional references and supported mask. Uses a paid external API and saves new files. Reuse request_id for the same action.',
+        ? 'Generate images, optionally guided by local references. GIF and SVG output take no references. Sends the prompt/images to the selected paid API and saves original files locally. Reuse request_id to recover the same action.'
+        : 'Edit the first reference image, with optional additional references and a supported mask or markup layer. Uses a paid external API and saves new files. Reuse request_id for the same action.',
       inputSchema: requestSchema.extend({ wait_ms: waitSchema }),
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     }, args => guarded(async () => {
@@ -77,12 +77,13 @@ export function createServer(runtime: Runtime): McpServer {
   }, args => guarded(async () => jobResult(await runtime.cancel(args.job_id))));
 
   server.registerTool('inspect_image', {
-    description: 'Read a local image or returned artifact ID and show its dimensions and a display preview. Does not upload the image or call a provider.',
+    description: 'Read a local image or returned artifact ID and show its dimensions, GIF frames, and a display preview. Does not upload the image or call a provider.',
     inputSchema: z.strictObject({ image: z.string() }), annotations: readOnly,
   }, args => guarded(async () => {
     const path = artifactPath(args.image, runtime.store);
-    const image = await readImage(path);
-    const response = result({ path, mime_type: image.mime, width: image.width, height: image.height });
+    const image = await readImage(path, true);
+    const response = result({ path, mime_type: image.mime, width: image.width, height: image.height,
+      ...(image.frames ? { frames: image.frames, duration_ms: image.duration_ms } : {}) });
     response.content.push({ type: 'image', data: await preview(path), mimeType: 'image/png' });
     return response;
   }));

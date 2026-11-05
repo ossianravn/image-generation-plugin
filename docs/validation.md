@@ -2,6 +2,12 @@
 
 **Date:** 3 October 2026. **Release:** 0.2.0 development build; provider workflow evidence was collected on 0.1.0. **Machine:** Windows x64, Node 24.19.0, npm 11.17.0.
 
+## Provider update (0.3.0)
+
+**Date:** 5 November 2026. Version 0.3.0 adds GPT Image 2.6 Flare and Sunburst, Nano Banana 2.1, GIF and SVG output, markup edits, `complexity`, `thinking_level`, and structured moderation errors. Seven new tests cover refusing impossible GIF, SVG, size, and value requests before a paid call; saving SVG and animated GIF outputs with their type and frame data; refusing an SVG with a script; markup validation and multipart upload; the SVG author model and its separate usage; moderation details without provider message text; and Gemini thinking configuration. All use mocked providers; the suite has 26 tests.
+
+A paid live run on the same date completed generation, two-reference composition, and an edit for all three new models, plus markup, GIF, and SVG stages for both GPT Image 2.6 models: 15 workflows, each saved, checksummed, and visually reviewed. The first SVG attempts failed with a structured `missing_required_parameter` error for `svg.model`, which led to the `svg_model` control; reruns with `gpt-6-astra` passed. Evidence recording now keeps each run's own plugin version, so the 3 October records still read 0.1.0. See the [catalogue](model-catalogue.md#added-5-november-2026) for observations.
+
 ## Shared credential setup
 
 Version 0.2.0 adds masked terminal setup and one OS credential store shared across hosts. Five new tests cover credential precedence, refresh and removal while the image service is running, setup persistence, cancellation after a partial save, and sanitized store errors. These tests use a fake credential store and mocked generation. The existing real MCP subprocess checks now exercise `credential_status` with synthetic environment keys and verify they are absent from results.

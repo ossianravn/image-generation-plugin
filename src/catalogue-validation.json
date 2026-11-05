@@ -19,6 +19,42 @@
     ],
     "references_tested": 2
   },
+  "openai:gpt-image-2.6-flare": {
+    "checked_at": "2026-11-05T16:48:17.242Z",
+    "plugin_version": "0.3.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit",
+      "markup",
+      "gif",
+      "svg"
+    ],
+    "references_tested": 2
+  },
+  "openai:gpt-image-2.6-sunburst": {
+    "checked_at": "2026-11-05T16:49:43.317Z",
+    "plugin_version": "0.3.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit",
+      "markup",
+      "gif",
+      "svg"
+    ],
+    "references_tested": 2
+  },
+  "gemini:gemini-nano-banana-2.1": {
+    "checked_at": "2026-11-05T16:44:47.462Z",
+    "plugin_version": "0.3.0",
+    "completed_workflows": [
+      "generate",
+      "reference",
+      "edit"
+    ],
+    "references_tested": 2
+  },
   "gemini:gemini-3.1-flash-image": {
     "checked_at": "2026-10-03T18:32:58.118Z",
     "plugin_version": "0.1.0",

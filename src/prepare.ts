@@ -1,6 +1,6 @@
-import type { ImageRequest, Operation, PreparedRequest } from './contracts.ts';
+import type { ImageRequest, InputImage, Operation, PreparedRequest } from './contracts.ts';
 import { ImageError } from './errors.ts';
-import { inspect, readImage } from './images.ts';
+import { inspect, layer, readImage } from './images.ts';
 import type { JobStore } from './store.ts';
 
 export function artifactPath(reference: string, store: JobStore): string {
@@ -14,6 +14,7 @@ export function artifactPath(reference: string, store: JobStore): string {
 export async function prepare(request: ImageRequest, operation: Operation, store: JobStore): Promise<PreparedRequest> {
   const references = await Promise.all(request.references.map(path => readImage(artifactPath(path, store))));
   const mask = request.mask ? await readImage(artifactPath(request.mask, store)) : undefined;
+  const markup = request.markup ? await readImage(artifactPath(request.markup, store)) : undefined;
   if (request.provider === 'openai' && references.some(image => image.mime === 'image/gif')) {
     throw new ImageError('REFERENCE_FORMAT', 'OpenAI references must be PNG, JPEG, or WebP.');
   }
@@ -29,5 +30,21 @@ export async function prepare(request: ImageRequest, operation: Operation, store
       throw new ImageError('MASK_FORMAT', 'The mask must be a PNG with alpha and the same dimensions as the first reference.');
     }
   }
-  return { request, operation, references, mask };
+  if (markup) await checkMarkup(markup, references[0]);
+  return { request, operation, references, mask, markup };
+}
+
+// OpenAI markup limits, from its image generation guide (checked 2026-11-05).
+async function checkMarkup(markup: InputImage, first: InputImage | undefined): Promise<void> {
+  if (!first) throw new ImageError('REFERENCE_REQUIRED', 'Markup applies to the first reference image.');
+  const [source, overlay] = await Promise.all([layer(first.bytes), layer(markup.bytes)]);
+  if (markup.mime !== 'image/png' || !overlay.transparent) {
+    throw new ImageError('MARKUP_FORMAT', 'Markup must be a PNG annotation layer with transparent pixels, not flattened onto the image.');
+  }
+  if (overlay.width !== source.width || overlay.height !== source.height) {
+    throw new ImageError('MARKUP_FORMAT', 'The markup layer must have the same width and height as the first reference.');
+  }
+  if (source.width * source.height > 16_777_216 || markup.bytes.length > 50 * 1024 * 1024) {
+    throw new ImageError('MARKUP_FORMAT', 'The first reference and markup layer may each have at most 16,777,216 pixels, and the markup file at most 50 MB.');
+  }
 }
