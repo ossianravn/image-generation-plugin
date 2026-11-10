@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { setTimeout as delay } from 'node:timers/promises';
-import { catalogue, findModel } from './catalogue.ts';
+import { catalogue, defaultModels, defaultProvider, findModel } from './catalogue.ts';
 import type { Config } from './config.ts';
 import type { Job, Operation, Provider, ProviderAdapter, ProviderContext, ProviderResult, StoredJob } from './contracts.ts';
 import { ImageError } from './errors.ts';
@@ -32,7 +32,12 @@ export class Runtime {
   async listModels(provider?: Provider) {
     await this.config.refresh();
     return catalogue.filter(model => !provider || model.provider === provider)
-      .map(model => ({ ...model, credential_configured: this.config.configured(model.provider) }));
+      .map(model => ({ ...model, credential_configured: this.config.configured(model.provider),
+        ...(defaultModels[model.provider] === model.id ? { provider_default: true } : {}) }));
+  }
+
+  defaultModel() {
+    return { provider: defaultProvider, model: defaultModels[defaultProvider]! };
   }
 
   async getModel(provider: Provider, id: string) {

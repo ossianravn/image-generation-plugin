@@ -2,7 +2,7 @@ import { McpServer } from '@modelcontextprotocol/server';
 import { z } from 'zod';
 import type { Job } from './contracts.ts';
 import { publicError } from './errors.ts';
-import { preview, readImage } from './images.ts';
+import { layer, preview, readImage } from './images.ts';
 import { artifactPath } from './prepare.ts';
 import type { Runtime } from './runtime.ts';
 import { providerSchema, requestSchema } from './schema.ts';
@@ -40,9 +40,9 @@ export function createServer(runtime: Runtime): McpServer {
   }, () => guarded(() => credentialStatus(runtime.config).then(result)));
 
   server.registerTool('list_models', {
-    description: 'List the curated image catalogue, documented controls, dated live workflow evidence, and credential presence. Presence does not verify current model access.',
+    description: 'List the curated image catalogue, the default model, documented controls, dated live workflow evidence, and credential presence. Presence does not verify current model access.',
     inputSchema: z.strictObject({ provider: providerSchema.optional() }), annotations: readOnly,
-  }, ({ provider }) => guarded(async () => result({ models: await runtime.listModels(provider) })));
+  }, ({ provider }) => guarded(async () => result({ default: runtime.defaultModel(), models: await runtime.listModels(provider) })));
 
   server.registerTool('get_model', {
     description: 'Inspect a catalogue model and current OpenRouter Image API endpoint capabilities. Discovery makes no paid generation request.',
@@ -53,8 +53,8 @@ export function createServer(runtime: Runtime): McpServer {
   for (const operation of ['generate', 'edit'] as const) {
     server.registerTool(`${operation}_image`, {
       description: operation === 'generate'
-        ? 'Generate images, optionally guided by local references. GIF and SVG output take no references. Sends the prompt/images to the selected paid API and saves original files locally. Reuse request_id to recover the same action.'
-        : 'Edit the first reference image, with optional additional references and a supported mask or markup layer. Uses a paid external API and saves new files. Reuse request_id for the same action.',
+        ? 'Generate images, optionally guided by local references. Defaults to OpenAI GPT Image 2.6 Flare; use other providers only when the user asks. GIF and SVG output take no references. Sends the prompt/images to the selected paid API and saves original files locally. Reuse request_id to recover the same action.'
+        : 'Edit the first reference image, with optional additional references and a supported mask or markup layer. Defaults to OpenAI GPT Image 2.6 Flare; use other providers only when the user asks. Uses a paid external API and saves new files. Reuse request_id for the same action.',
       inputSchema: requestSchema.extend({ wait_ms: waitSchema }),
       annotations: { readOnlyHint: false, destructiveHint: false, idempotentHint: true, openWorldHint: true },
     }, args => guarded(async () => {
@@ -77,12 +77,15 @@ export function createServer(runtime: Runtime): McpServer {
   }, args => guarded(async () => jobResult(await runtime.cancel(args.job_id))));
 
   server.registerTool('inspect_image', {
-    description: 'Read a local image or returned artifact ID and show its dimensions, GIF frames, and a display preview. Does not upload the image or call a provider.',
+    description: 'Read a local image or returned artifact ID and show its dimensions, whether it has transparent pixels, GIF frames, and a display preview. Does not upload the image or call a provider.',
     inputSchema: z.strictObject({ image: z.string() }), annotations: readOnly,
   }, args => guarded(async () => {
     const path = artifactPath(args.image, runtime.store);
     const image = await readImage(path, true);
+    // Report decoded alpha: a drawn checkerboard is not transparency. Vectors are transparent unless painted over.
+    const transparent = image.mime === 'image/svg+xml' ? undefined : (await layer(image.bytes)).transparent;
     const response = result({ path, mime_type: image.mime, width: image.width, height: image.height,
+      ...(transparent === undefined ? {} : { has_transparent_pixels: transparent }),
       ...(image.frames ? { frames: image.frames, duration_ms: image.duration_ms } : {}) });
     response.content.push({ type: 'image', data: await preview(path), mimeType: 'image/png' });
     return response;

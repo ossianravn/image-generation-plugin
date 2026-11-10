@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { isAbsolute } from 'node:path';
-import { findModel } from './catalogue.ts';
+import { resolveModel } from './catalogue.ts';
 import type { ImageRequest, Operation } from './contracts.ts';
 import { ImageError } from './errors.ts';
 import { checkOptions } from './options.ts';
@@ -25,8 +25,10 @@ export const optionsSchema = z.strictObject({
 
 export const requestSchema = z.strictObject({
   request_id: z.string().min(1).describe('Reuse this ID when retrying the same action; use a new ID for a new image.'),
-  provider: providerSchema,
-  model: z.string().min(1),
+  provider: providerSchema.optional()
+    .describe('Omit for the default, OpenAI. Choose another provider only when the user asks for it.'),
+  model: z.string().min(1).optional()
+    .describe('Omit for the provider default: gpt-image-2.6-flare on OpenAI. Use gpt-image-2.6-sunburst for dense text, demanding layouts, or precise edits.'),
   prompt: z.string().trim().min(1),
   output_directory: z.string().refine(isAbsolute, 'Use an absolute output directory.'),
   references: z.array(z.string().min(1)).default([]).describe('Absolute local image paths or artifact IDs.'),
@@ -42,8 +44,9 @@ export function parseRequest(raw: unknown, operation: Operation): ImageRequest {
     const issues = parsed.error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`);
     throw new ImageError('INVALID_REQUEST', issues.join('; '));
   }
-  const request = parsed.data;
-  const model = findModel(request.provider, request.model);
+  const model = resolveModel(parsed.data.provider, parsed.data.model);
+  // Resolve defaults before fingerprinting, so a retried request matches its original.
+  const request: ImageRequest = { ...parsed.data, provider: model.provider, model: model.id };
   if (operation === 'edit' && request.references.length === 0) {
     throw new ImageError('REFERENCE_REQUIRED', 'Editing needs a source image as the first reference.');
   }

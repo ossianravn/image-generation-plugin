@@ -24,6 +24,10 @@ Sources for direct routes: [OpenAI image guide](https://developers.openai.com/ap
 
 The listed maximums are capability metadata, not maximum-count live tests. The live run used one output per call and two reference inputs at the composition stage. Tests used low-quality 1024-square OpenAI output, 1K square Gemini output, FLUX 1k with grounding off, and supported 1K/aspect controls on OpenRouter. Muse used its defaults and returned 1920×1280 WebP. FLUX returned 880×1184 WebP; other selected routes returned 1024×1024 images.
 
+## Default model
+
+Requests that omit `provider` and `model` use GPT Image 2.6 Flare (since 10 November 2026). A provider without a model uses its default: Flare for OpenAI, Nano Banana 2.1 for Gemini, FLUX 3 Image for Replicate. OpenRouter needs an explicit model. A model ID alone selects its provider. `list_models` returns the overall default and marks each provider default with `provider_default`. The bundled skill uses other providers only when the user asks for them.
+
 ## Added 5 November 2026
 
 The three added models passed the same three-stage journey on plugin 0.3.0. Both GPT Image 2.6 models also passed markup, GIF, and SVG stages. Records are in [live-validation.json](live-validation.json); sources and open questions are in the [5 November research note](research-2026-11-05.md).

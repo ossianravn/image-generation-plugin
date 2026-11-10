@@ -66,6 +66,27 @@ export const catalogue: ModelDescriptor[] = [
     'https://openrouter.ai/meta/muse-image'),
 ];
 
+/** The model used when a request names no provider. Other providers are for explicit requests. */
+export const defaultProvider: Provider = 'openai';
+/** The model used when a request names a provider but no model. OpenRouter routes need an explicit model. */
+export const defaultModels: Partial<Record<Provider, string>> = {
+  openai: 'gpt-image-2.6-flare',
+  gemini: 'gemini-nano-banana-2.1',
+  replicate: 'black-forest-labs/flux-3-image',
+};
+
+/** Fill an omitted provider or model. A model ID alone selects its provider when the ID is unique. */
+export function resolveModel(provider: Provider | undefined, id: string | undefined): ModelDescriptor {
+  if (!provider && id) {
+    const matches = catalogue.filter(item => item.id === id);
+    if (matches.length === 1) return matches[0]!;
+  }
+  const selected = provider ?? defaultProvider;
+  const model = id ?? defaultModels[selected];
+  if (!model) throw new ImageError('MODEL_REQUIRED', `Name a ${selected} model. Use list_models to see the catalogue.`);
+  return findModel(selected, model);
+}
+
 export function findModel(provider: Provider, id: string): ModelDescriptor {
   const found = catalogue.find(item => item.provider === provider && item.id === id);
   if (!found) throw new ImageError('MODEL_NOT_FOUND', 'This model is not in the selected provider catalogue. Use list_models.');

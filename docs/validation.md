@@ -2,6 +2,10 @@
 
 **Date:** 3 October 2026. **Release:** 0.2.0 development build; provider workflow evidence was collected on 0.1.0. **Machine:** Windows x64, Node 24.19.0, npm 11.17.0.
 
+## Default model and prompting guidance (0.3.0)
+
+**Date:** 10 November 2026. GPT Image 2.6 Flare became the default model, SVG output accepts transparent backgrounds, `inspect_image` reports transparent pixels, and the skill gained a GPT Image 2.6 prompting reference. One new test covers default resolution, provider defaults, model-only selection, and the refusal for OpenRouter without a model; the MCP subprocess test now checks the reported default and transparency. The suite has 27 tests. No paid run was needed: the request sent to OpenAI is unchanged apart from the filled-in model.
+
 ## Provider update (0.3.0)
 
 **Date:** 5 November 2026. Version 0.3.0 adds GPT Image 2.6 Flare and Sunburst, Nano Banana 2.1, GIF and SVG output, markup edits, `complexity`, `thinking_level`, and structured moderation errors. Seven new tests cover refusing impossible GIF, SVG, size, and value requests before a paid call; saving SVG and animated GIF outputs with their type and frame data; refusing an SVG with a script; markup validation and multipart upload; the SVG author model and its separate usage; moderation details without provider message text; and Gemini thinking configuration. All use mocked providers; the suite has 26 tests.

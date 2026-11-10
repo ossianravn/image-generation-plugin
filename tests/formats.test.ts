@@ -21,17 +21,39 @@ test('GIF, SVG and size requests that cannot succeed are refused before a paid c
       [{ ...base, count: 2, options: { output_format: 'svg' } }, /Set count to 1/],
       [{ ...base, options: { output_format: 'gif', output_compression: 50 } }, /JPEG and WebP/],
       [{ ...base, options: { frame_count: 4 } }, /GIF output only/],
-      [{ ...base, options: { output_format: 'jpeg', background: 'transparent' } }, /PNG or WebP/],
+      [{ ...base, options: { output_format: 'jpeg', background: 'transparent' } }, /PNG, WebP, or SVG/],
       [{ ...base, options: { size: '1000x1000' } }, /multiples of 16/],
       [{ ...base, options: { size: '3840x1072' } }, /between 1:3 and 3:1/],
       [{ ...base, model: 'gpt-image-2.5-flare', options: { output_format: 'gif' } }, /accepts output_format values png, jpeg, webp/],
       [{ ...base, model: 'gpt-image-2.5-flare', options: { complexity: 'low' } }, /does not support the complexity control/],
       [{ ...base, provider: 'gemini', model: 'gemini-nano-banana-2.1', options: { resolution: '512' } }, /1K, 2K, 4K/],
     ] as const) await assert.rejects(runtime.start(raw, 'generate'), pattern);
+    await runtime.wait((await runtime.start({ ...base, request_id: 'svg-transparent',
+      options: { output_format: 'svg', background: 'transparent' } }, 'generate')).id, 3000);
     const accepted = await runtime.start({ ...base, request_id: 'gif-ok',
       options: { output_format: 'gif', frame_count: 4, size: '512x512' } }, 'generate');
     await runtime.wait(accepted.id, 3000);
-    assert.equal(calls, 1);
+    assert.equal(calls, 2);
+  } finally { await runtime.close(); }
+});
+
+test('requests without a provider or model use GPT Image 2.6 Flare, and a model ID alone finds its provider', async () => {
+  const f = await fixture();
+  const models: string[] = [];
+  const runtime = await runtimeFor(f.directory, { async submit(input) {
+    models.push(`${input.request.provider}:${input.request.model}`);
+    return { images: [{ base64: f.bytes.toString('base64') }] };
+  } });
+  const base = { request_id: 'default', prompt: 'A red ceramic cup', output_directory: f.outputs };
+  try {
+    for (const [id, extra] of [['default', {}], ['gemini', { provider: 'gemini' }], ['by-id', { model: 'gpt-image-2.6-sunburst' }]] as const) {
+      await runtime.wait((await runtime.start({ ...base, ...extra, request_id: id }, 'generate')).id, 3000);
+    }
+    assert.deepEqual(models, ['openai:gpt-image-2.6-flare', 'gemini:gemini-nano-banana-2.1', 'openai:gpt-image-2.6-sunburst']);
+    const job = await runtime.start({ ...base, request_id: 'default' }, 'generate');
+    assert.equal(job.model, 'gpt-image-2.6-flare');
+    await assert.rejects(runtime.start({ ...base, request_id: 'router', provider: 'openrouter' }, 'generate'), /Name a openrouter model/);
+    assert.equal(models.length, 3);
   } finally { await runtime.close(); }
 });
 

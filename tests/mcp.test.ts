@@ -33,6 +33,9 @@ for (const mode of ['legacy', 'auto'] as const) {
       const image = await client.callTool({ name: 'inspect_image', arguments: { image: path } });
       const blocks = image.content as { type: string; mimeType?: string }[];
       assert.ok(blocks.some(block => block.type === 'image' && block.mimeType === 'image/png'));
+      assert.equal((image.structuredContent as { has_transparent_pixels?: boolean }).has_transparent_pixels, false);
+      const listed = (await client.callTool({ name: 'list_models', arguments: {} })).structuredContent as { default: { model: string } };
+      assert.equal(listed.default.model, 'gpt-image-2.6-flare');
       const missing = await client.callTool({ name: 'get_job', arguments: { job_id: 'missing', wait_ms: 0 } });
       assert.equal(missing.isError, true);
     } finally { await client.close(); }

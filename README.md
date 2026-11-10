@@ -188,7 +188,7 @@ This uses [OpenCode v2's Git package installer](https://opencode.ai/v2/docs/plug
 
 **Do this once per computer and OS user.** The same saved keys work across all three clients. Your coding-agent subscription does not include image API credits.
 
-**1. Create a key for at least one provider.**
+**1. Create an OpenAI key.** OpenAI's GPT Image 2.6 is the default model. Add keys for other providers only if you want to ask for their models by name.
 
 | Provider | Get an API key | Models available through this plugin |
 | --- | --- | --- |
@@ -228,12 +228,11 @@ Paste into any supported client:
 
 ```text
 Use Image Generation to create a square product illustration of a
-red ceramic mug on a pale blue background. Use a model from one of
-my configured providers, save it in this project's assets folder,
-and show me the result.
+red ceramic mug on a pale blue background. Save it in this
+project's assets folder and show me the result.
 ```
 
-You get the original image saved locally, its file path, and a preview when your client supports it. You can request a particular provider or model by name.
+You get the original image saved locally, its file path, and a preview when your client supports it. The plugin uses GPT Image 2.6 Flare unless you ask for something else: say “use Sunburst” for dense text or precise edits, or name another provider or model, such as Nano Banana.
 
 ### Bring references
 
@@ -276,6 +275,8 @@ GIF and SVG start from your description alone; they can't use reference images. 
 | Google Gemini | Nano Banana 2.1, Nano Banana 2, Nano Banana Pro |
 | Replicate | FLUX 3 Image |
 | OpenRouter | Seedream 5.0 Pro, MAI-Image-2.6, Grok Imagine Image 2.0, Qwen Image 3, Qwen Image 3 Pro, Muse Image |
+
+**GPT Image 2.6 Flare is the default.** The agent switches to Sunburst for dense text, slides, diagrams, and precise edits, and uses other providers only when you ask. The bundled skill teaches the agent OpenAI's GPT Image 2.6 prompting practice, including GIF loops, SVG logos, markup edits, and transparent cutouts.
 
 The original 11 models completed text generation, composition using two references, and a subsequent edit in the **3 October 2026** live validation run. Those 33 outputs were saved, decoded, checked, and visually reviewed. GPT Image 2.6 Flare, GPT Image 2.6 Sunburst, and Nano Banana 2.1 passed the same journey on **5 November 2026**, and both GPT Image 2.6 models also passed markup, GIF, and SVG checks. Available sizes, formats, masks, transparency, and reference limits vary by model; the core workflow tests do not cover every option.
 

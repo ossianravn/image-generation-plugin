@@ -49,8 +49,8 @@ export function checkOptions(request: ImageRequest, model: ModelDescriptor): voi
     throw unsupported('frame_count and frame_duration_ms apply to GIF output only.');
   }
   if (format !== 'svg' && options.svg_model !== undefined) throw unsupported('svg_model applies to SVG output only.');
-  if (options.background === 'transparent' && format && format !== 'png' && format !== 'webp') {
-    throw unsupported('Transparent backgrounds need PNG or WebP output.');
+  if (options.background === 'transparent' && format && !['png', 'webp', 'svg'].includes(format)) {
+    throw unsupported('Transparent backgrounds need PNG, WebP, or SVG output.');
   }
   if (model.provider === 'openai' && options.size) checkGptImageSize(options.size, animated);
 }
